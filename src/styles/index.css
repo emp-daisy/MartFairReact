@@ -7,8 +7,43 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+:focus{
+  outline: none;
+}
+
+#root{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+a.yellish {
+  color: #d29d05;
+}
+a.yellish:hover {
+  color: #000000;
+}
+.ui.yellish.button, .ui.yellish.buttons .button {
+  background-color: #d29d05;
+  color: #ffffff;
+}
+.ui.yellish.button:hover, .ui.yellish.buttons .button:hover {
+  background-color: #c5a138;
+  color: #ffffff;
+}
+.ui.yellish.header, .yellish {
+  color: #d29d05;
+}
+
+.product-tab{
+
 }
