@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import {
+  Route, BrowserRouter as Router, Redirect, Switch,
+} from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -11,6 +13,7 @@ import Register from './component/Register';
 import Login from './component/Login';
 import Contact from './component/Contact';
 import ProductInfo from './component/ProductInfo';
+import Cart from './component/Cart';
 import * as serviceWorker from './utils/serviceWorker';
 
 import rootReducer from './reducers';
@@ -25,11 +28,15 @@ ReactDOM.render(
     <React.Fragment>
       <main className="main-content">
         <Router>
-          <Route path="/" component={App} exact />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/contact-us" component={Contact} />
-          <Route path="/product/:id" component={ProductInfo} />
+          <Switch>
+            <Route path="/" exact component={App} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/register" exact component={Register} />
+            <Route path="/contact-us" exact component={Contact} />
+            <Route path="/product/:id" exact component={ProductInfo} />
+            <Route path="/cart" exact component={Cart} />
+            <Redirect from="*" to="/" />
+          </Switch>
         </Router>
       </main>
       <Footer />

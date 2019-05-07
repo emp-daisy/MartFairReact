@@ -40,10 +40,19 @@ a.yellish:hover {
   background-color: #c5a138;
   color: #ffffff;
 }
+.ui.yellish-invert.button, .ui.yellish-invert.buttons .button {
+  color: #d29d05;
+  border: 1px solid#c5a138;
+  background-color: #ffffff;
+}
+.ui.yellish-invert.button:hover, .ui.yellish-invert.buttons .button:hover {
+  color: #c5a138;
+  border: 1px solid#c5a138;
+  background-color: #ffffff;
+}
 .ui.yellish.header, .yellish {
   color: #d29d05;
 }
-
-.product-tab{
-
+.ui.secondary.inverted.menu a.item.shopping-icon {
+  color: #ffffff !important;
 }

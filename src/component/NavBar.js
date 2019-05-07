@@ -43,6 +43,19 @@ class NavBar extends Component {
     </Dropdown>
   );
 
+  shoppingCart =() => (
+    <React.Fragment>
+      <Icon name="shopping cart" size="large" />
+      <div
+        id="live_message_badge_main_header"
+        className="floating ui red label"
+        style={{ padding: '2px 3px', top: '10px', left: '55px' }}
+      >
+        <span className="live_message_badge">10</span>
+      </div>
+    </React.Fragment>
+  )
+
   mobile = () => {
     const { children } = this.props;
     const { sidebarOpened } = this.state;
@@ -91,15 +104,8 @@ class NavBar extends Component {
                     <Menu.Item>
                       <SearchProduct />
                     </Menu.Item>
-                    <Menu.Item>
-                      <Icon name="shopping cart" size="large" />
-                      <div
-                        id="live_message_badge_main_header"
-                        className="floating ui red label"
-                        style={{ padding: '2px 3px', top: '10px', left: '55px' }}
-                      >
-                        <span className="live_message_badge">10</span>
-                      </div>
+                    <Menu.Item href="/cart" as="a" className="shopping-icon">
+                      {this.shoppingCart()}
                     </Menu.Item>
                   </Menu.Menu>
                 </Menu>
@@ -157,15 +163,8 @@ class NavBar extends Component {
                   <Menu.Item>
                     {this.myAccount()}
                   </Menu.Item>
-                  <Menu.Item>
-                    <Icon name="shopping cart" size="large" />
-                    <div
-                      id="live_message_badge_main_header"
-                      className="floating ui red label"
-                      style={{ padding: '2px 3px', top: '10px', left: '55px' }}
-                    >
-                      <span className="live_message_badge">10</span>
-                    </div>
+                  <Menu.Item href="/cart" as="a" className="shopping-icon">
+                    {this.shoppingCart()}
                   </Menu.Item>
                 </Menu.Menu>
               </Container>

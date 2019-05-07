@@ -1,8 +1,9 @@
 import React from 'react';
 import {
-  Image, Grid, List, Tab, Header, Rating, Button, Label, Input, Item, Responsive,
+  Image, Grid, List, Tab, Header, Rating, Button, Label, Item, Responsive,
 } from 'semantic-ui-react';
 import logo from '../assets/images/product_images/a-partridge-in-a-pear-tree-2.gif';
+import NumberInput from './NumberInput';
 
 const panes = [
   { menuItem: 'Description', render: () => <Tab.Pane attached={false}><ProductDescription /></Tab.Pane> },
@@ -78,17 +79,7 @@ const ProductInfo = () => (
                 Suspendisse quos? Tempus cras iure temporibus? Eu laudantium cubilia sem sem!
                 Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.
               </h5>
-              <div>
-                <Button icon="minus" circular style={{ margin: '0 5px' }} />
-                <Input
-                  type="number"
-                  disabled
-                  min="1"
-                  max="5"
-                  defaultValue="1"
-                />
-                <Button icon="plus" circular style={{ margin: '0 5px' }} />
-              </div>
+              <NumberInput />
               <div style={{ padding: '20px 0' }}>
                 <Button className="yellish" size="small" style={{ borderRadius: '500rem' }}>
               Add to Cart

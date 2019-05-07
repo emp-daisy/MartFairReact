@@ -8,7 +8,7 @@ import {
 } from 'semantic-ui-react';
 
 const ContactForm = () => (
-  <Grid textAlign="center" style={{ minHeight: '100vh' }} verticalAlign="middle">
+  <Grid textAlign="center" verticalAlign="middle" style={{ margin: 'auto 0' }}>
     <Grid.Column style={{ maxWidth: 450 }}>
       <Form size="large">
         <Segment stacked>
