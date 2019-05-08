@@ -7,6 +7,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+h1 { font-family: 'PlayfairDisplayBold', serif !important; }
+h2, h3, h4 { font-family: 'MontserratBold', sans-serif !important; }
+h5, h6 ,p { font-family: 'OpenSans', sans-serif !important; }
+
 :focus{
   outline: none;
 }
@@ -32,6 +36,9 @@ a.yellish {
 a.yellish:hover {
   color: #000000;
 }
+.ui.button.roundish {
+  border-radius: 500rem !important;
+}
 .ui.yellish.button, .ui.yellish.buttons .button {
   background-color: #d29d05;
   color: #ffffff;
@@ -40,12 +47,12 @@ a.yellish:hover {
   background-color: #c5a138;
   color: #ffffff;
 }
-.ui.yellish-invert.button, .ui.yellish-invert.buttons .button {
+.ui.yellish.inverted.button, .ui.yellish.inverted.buttons .button {
   color: #d29d05;
   border: 1px solid#c5a138;
   background-color: #ffffff;
 }
-.ui.yellish-invert.button:hover, .ui.yellish-invert.buttons .button:hover {
+.ui.yellish.inverted.button:hover, .ui.yellish.inverted.buttons .button:hover {
   color: #c5a138;
   border: 1px solid#c5a138;
   background-color: #ffffff;
@@ -56,3 +63,33 @@ a.yellish:hover {
 .ui.secondary.inverted.menu a.item.shopping-icon {
   color: #ffffff !important;
 }
+.checkout.ui.steps .step.active .title {
+  color: #ffffff;
+}
+.checkout.ui.steps .step.active, .checkout.ui.steps .step.active:after {
+  background: #c5a138;
+}
+.number-counter.ui.input input{
+  border-radius: 50px;
+  width: 45px;
+  text-align: center;
+}
+.small-lead{
+  font-size: 14px;
+  font-weight: normal;
+  color: #6C6C6C;
+}
+.greyish{
+  color:#6C6C6C !important;
+}
+.scrolling-wrapper {
+  /* overflow-x: scroll; */
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding: 15px 0;
+}
+  .scrolling-wrapper .card ,
+  .scrolling-wrapper .item {
+    display: inline-block;
+  }

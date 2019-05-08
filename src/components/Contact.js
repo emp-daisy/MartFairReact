@@ -27,7 +27,7 @@ const ContactForm = () => (
             fluid
             placeholder="Your Message."
           />
-          <Button className="yellish" fluid size="large" style={{ borderRadius: '500rem' }}>
+          <Button className="yellish roundish" fluid size="large">
               Send
           </Button>
           <Grid columns={2} stackable inverted style={{ paddingTop: 30 }}>

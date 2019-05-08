@@ -37,7 +37,7 @@ const RegisterForm = () => (
             placeholder="Verify Password"
             type="password"
           />
-          <Button className="yellish" fluid size="large" style={{ borderRadius: '500rem' }}>
+          <Button className="yellish roundish" fluid size="large">
             Login
           </Button>
 

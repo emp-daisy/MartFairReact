@@ -1,0 +1,40 @@
+.ui.formstripe-payment {
+  padding: 10px;
+}
+.ui.form.stripe-payment input.stripe-input,
+.StripeElement {
+  display: block;
+  margin: 10px 0 20px 0 !important;
+  max-width: 500px !important;
+  padding: 10px 14px !important;
+  font-size: 1em !important;
+  font-family: 'OpenSans', sans-serif !important;
+  box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px !important;
+  border: 0 !important;
+  outline: 0 !important;
+  border-radius: 4px !important;
+  background: white !important;
+}
+
+.ui.form.stripe-payment input.stripe-input::placeholder {
+  color: #6c6c6c !important;
+}
+
+.ui.form.stripe-payment input.stripe-input:focus,
+.StripeElement--focus {
+  box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px, rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+}
+.ElementsApp, .ElementsApp .InputElement, .ui.form.stripe-payment input.stripe-input {
+  color: #000000;
+  font-weight: 500;
+  font-family: OpenSans, sans-serif;
+  font-size: 16px !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ui.form.stripe-payment .field>label {
+  font-size: 16px;
+  color: #6c6c6c;
+}

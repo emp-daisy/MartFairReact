@@ -27,7 +27,7 @@ const LoginForm = () => (
               type="password"
             />
             <Form.Checkbox label="Remember me" />
-            <Button className="yellish" fluid size="large" style={{ borderRadius: '500rem' }}>
+            <Button className="yellish roundish" fluid size="large">
               Sign in
             </Button>
 

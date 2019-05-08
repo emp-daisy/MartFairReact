@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Header, Table, Button, Container, Responsive,
+  Header, Table, Button, Container, Responsive, Image,
 } from 'semantic-ui-react';
 import NumberInput from './NumberInput';
+import logo from '../assets/a-partridge-in-a-pear-tree-2.gif';
 
 const getWidth = () => (typeof window === 'undefined'
   ? Responsive.onlyTablet.minWidth
@@ -20,6 +21,7 @@ class Cart extends Component {
       >
         <Table.Cell>
           <Header as="h4">
+            <Image className="ui image" size="mini" src={logo} />
             {itemName}
           </Header>
         </Table.Cell>
@@ -36,6 +38,7 @@ class Cart extends Component {
           <Header as="h3">
             {subTotal}
           </Header>
+          <a className="yellish" href="/">Remove </a>
         </Table.Cell>
       </Responsive>
       <Responsive
@@ -43,24 +46,26 @@ class Cart extends Component {
         getWidth={getWidth}
         maxWidth={Responsive.onlyMobile.maxWidth}
       >
-        <Table.Cell>
-          <Header as="h4">
+        <Table.Cell textAlign="center">
+          <Image className="ui centered image" size="mini" src={logo} />
+          <Header as="h4" style={{ marginBottom: 0 }}>
             {itemName}
           </Header>
-          <Header as="h6">
+          <p>
             {size}
-          </Header>
+          </p>
         </Table.Cell>
-        <Table.Cell singleLine>
+        <Table.Cell singleLine textAlign="center">
           <NumberInput defaultValue={quantity} />
           <Header as="h4">
             {amount}
           </Header>
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell textAlign="center">
           <Header as="h3">
             {subTotal}
           </Header>
+          <a className="yellish" href="/">Remove </a>
         </Table.Cell>
       </Responsive>
     </React.Fragment>
@@ -75,7 +80,7 @@ class Cart extends Component {
       >
         <Table.HeaderCell singleLine> Item </Table.HeaderCell>
         <Table.HeaderCell>Size</Table.HeaderCell>
-        <Table.HeaderCell textAlign="left">Quantity</Table.HeaderCell>
+        <Table.HeaderCell>Quantity</Table.HeaderCell>
         <Table.HeaderCell>Unit Price</Table.HeaderCell>
         <Table.HeaderCell>Sub Total</Table.HeaderCell>
       </Responsive>
@@ -84,14 +89,15 @@ class Cart extends Component {
         getWidth={getWidth}
         maxWidth={Responsive.onlyMobile.maxWidth}
       >
-        <Table.HeaderCell singleLine>Item / Size</Table.HeaderCell>
-        <Table.HeaderCell textAlign="left">Quantity \ Unit Price</Table.HeaderCell>
-        <Table.HeaderCell>Sub Total</Table.HeaderCell>
+        <Table.HeaderCell singleLine textAlign="center">Item / Size</Table.HeaderCell>
+        <Table.HeaderCell textAlign="center">Quantity \ Unit Price</Table.HeaderCell>
+        <Table.HeaderCell textAlign="center">Sub Total</Table.HeaderCell>
       </Responsive>
     </React.Fragment>
   )
 
   render() {
+    const isMobileColumn = window && window.innerWidth < Responsive.onlyMobile.maxWidth ? 3 : 5;
     return (
       <Container textAlign="center">
         <Header textAlign="center" as="h2" style={{ margin: '15px auto' }}>Cart</Header>
@@ -115,7 +121,7 @@ class Cart extends Component {
           </Table.Body>
           <Table.Footer fullWidth>
             <Table.Row>
-              <Table.HeaderCell colSpan={window && window.innerWidth < 768 ? 2 : 4}>
+              <Table.HeaderCell colSpan={isMobileColumn - 1}>
                 <Header textAlign="right">Total:</Header>
               </Table.HeaderCell>
               <Table.HeaderCell>
@@ -123,11 +129,11 @@ class Cart extends Component {
               </Table.HeaderCell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell colSpan={window && window.innerWidth < 768 ? 3 : 5}>
-                <Button icon className="yellish-invert" as="a" href="/">
+              <Table.Cell colSpan={isMobileColumn}>
+                <Button icon className="yellish inverted roundish" as="a" href="/">
                 Back to shop
                 </Button>
-                <Button floated="right" icon className="yellish">
+                <Button floated="right" icon className="yellish roundish" as="a" href="/checkout">
                 Checkout
                 </Button>
               </Table.Cell>
