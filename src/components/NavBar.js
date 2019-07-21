@@ -62,13 +62,15 @@ class NavBar extends Component {
     return (
       <React.Fragment>
         <Icon name="shopping cart" size="large" />
-        <div
-          id="live_message_badge_main_header"
-          className="floating ui red label"
-          style={{ padding: '3px', top: '10px', left: '55px' }}
-        >
-          <span className="live_message_badge">{cartSize}</span>
-        </div>
+        { cartSize>0 &&
+          <div
+            id="live_message_badge_main_header"
+            className="floating ui red label"
+            style={{ padding: '3px', top: '10px', left: '55px' }}
+          >
+            <span className="live_message_badge">{cartSize}</span>
+          </div>
+        }
       </React.Fragment>
     );
   }

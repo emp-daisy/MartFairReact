@@ -38,7 +38,7 @@ const RegisterForm = () => (
             type="password"
           />
           <Button className="yellish roundish" fluid size="large">
-            Login
+            Register
           </Button>
 
           <Divider horizontal>Or</Divider>

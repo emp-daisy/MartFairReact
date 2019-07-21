@@ -59,7 +59,6 @@ class LoginPage extends Component {
                   value={password}
                   onChange={this.handleChange}
                 />
-                <Form.Checkbox label="Remember me" />
                 <Button
                   className="yellish roundish"
                   fluid
@@ -80,7 +79,7 @@ class LoginPage extends Component {
                       <a className="yellish" href="/">Forgot password</a>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                      <a className="yellish" href="/register">Have an account?</a>
+                      <a className="yellish" href="/register">Don't have an account?</a>
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>

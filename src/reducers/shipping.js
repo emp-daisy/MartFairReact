@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        productInfo: undefined,
+        allShipping: undefined,
         error: true,
         errorMessage: action.errorMessage,
       };
@@ -52,6 +52,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         error: true,
+        shippingInfo: undefined,
         errorMessage: action.errorMessage,
       };
     default:

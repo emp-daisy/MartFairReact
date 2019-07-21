@@ -57,6 +57,28 @@ export default (state = initialState, action) => {
         error: true,
         errorMessage: action.errorMessage,
       };
+    case CREATE_CUSTOMER_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        errorMessage: '',
+      };
+    case CREATE_CUSTOMER_PASS:
+      return {
+        ...state,
+        loading: false,
+        customerInfo: action.customer,
+        loggedIn: true,
+      };
+    case CREATE_CUSTOMER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        customerInfo: undefined,
+        error: true,
+        errorMessage: action.errorMessage,
+      };
     case GET_CUSTOMER_PENDING:
       return {
         ...state,
@@ -76,6 +98,72 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         customerInfo: undefined,
+        error: true,
+        errorMessage: action.errorMessage,
+      };
+    case UPDATE_CUSTOMER_DETAIL_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        errorMessage: '',
+      };
+    case UPDATE_CUSTOMER_DETAIL_PASS:
+      return {
+        ...state,
+        loading: false,
+        customerInfo: action.customer,
+        loggedIn: true,
+      };
+    case UPDATE_CUSTOMER_DETAIL_FAIL:
+      return {
+        ...state,
+        loading: false,
+        // customerInfo: undefined,
+        error: true,
+        errorMessage: action.errorMessage,
+      };
+    case UPDATE_CUSTOMER_ADDRESS_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        errorMessage: '',
+      };
+    case UPDATE_CUSTOMER_ADDRESS_PASS:
+      return {
+        ...state,
+        loading: false,
+        customerInfo: action.customer,
+        loggedIn: true,
+      };
+    case UPDATE_CUSTOMER_ADDRESS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        // customerInfo: undefined,
+        error: true,
+        errorMessage: action.errorMessage,
+      };
+    case UPDATE_CUSTOMER_CARD_PENDING:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        errorMessage: '',
+      };
+    case UPDATE_CUSTOMER_CARD_PASS:
+      return {
+        ...state,
+        loading: false,
+        customerInfo: action.customer,
+        loggedIn: true,
+      };
+    case UPDATE_CUSTOMER_CARD_FAIL:
+      return {
+        ...state,
+        loading: false,
+        // customerInfo: undefined,
         error: true,
         errorMessage: action.errorMessage,
       };

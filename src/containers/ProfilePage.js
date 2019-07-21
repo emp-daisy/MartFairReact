@@ -2,26 +2,62 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  Menu, Container, Icon, Grid, Segment, List, Button, Header, Table, Accordion,
+  Menu, Container, Icon, Grid, Segment, List, Button, Header, Table, Accordion, Modal, Form,
 } from 'semantic-ui-react';
 import { getWishlist, moveToCart } from '../actions/cart';
-import { getCustomer } from '../actions/customer';
+import {
+  getCustomer, updateCustomerCard, updateCustomerDetails, updateCustomerAddress,
+} from '../actions/customer';
+import { getShippings } from '../actions/shipping';
 import { getCustomerOrders, getOrder } from '../actions/order';
 import Page404 from '../components/Page404';
 
 class ProfilePage extends Component {
   state = {
     activeOrderId: -1,
+    creditCard: '',
+    activeModal: null,
   };
 
   componentDidMount=() => {
     this.getMenuItems();
+    this.props.getShippings();
   }
+
+  componentDidUpdate = (prevProps) => {
+    const { customerInfo, history: { location: { pathname } } } = this.props;
+    const { pathname: prevPathname } = prevProps.history.location;
+
+    if (customerInfo !== prevProps.customerInfo) {
+      this.handleModalClose();
+    }
+    if (pathname !== prevPathname) {
+      switch (pathname) {
+        case '/account':
+          this.props.getCustomer();
+          break;
+        case '/orders':
+          this.props.getCustomerOrders();
+          break;
+        case '/wishlist':
+          this.props.getWishlist();
+          break;
+        default:
+          this.props.getCustomer();
+          break;
+      }
+    }
+  }
+
+  handleModalOpen = activeModal => this.setState({ activeModal })
+
+  handleModalClose = () => this.setState({ activeModal: null })
 
   handleItemClick = (_e, { name }) => this.props.history.push(`/${name}`)
 
   customerDetails = () => {
-    const { customerInfo } = this.props;
+    const { customerInfo, loading } = this.props;
+    const { activeModal } = this.state;
     return (
       <React.Fragment>
         <Table celled>
@@ -31,16 +67,46 @@ class ProfilePage extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
+
             <Table.Row>
-              <Table.Cell>Name</Table.Cell>
-              <Table.Cell>{customerInfo.name}</Table.Cell>
+              <Table.Cell>
+                <Table style={{ border: 'none' }}>
+                  <Table.Body>
+                    <Table.Row><Table.Cell>Name</Table.Cell></Table.Row>
+                    <Table.Row><Table.Cell>Email</Table.Cell></Table.Row>
+                    <Table.Row><Table.Cell>Contact</Table.Cell></Table.Row>
+                    <Table.Row>
+                      <Table.Cell>
+                        <Icon name="edit" onClick={() => this.handleModalOpen('customer_details')} />
+                      </Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                </Table>
+              </Table.Cell>
+              <Table.Cell>
+                <Table style={{ border: 'none' }}>
+                  <Table.Body>
+                    <Table.Row><Table.Cell>{customerInfo.name}</Table.Cell></Table.Row>
+                    <Table.Row><Table.Cell>{customerInfo.email}</Table.Cell></Table.Row>
+                    <Table.Row>
+                      <Table.Cell>
+                        {customerInfo.day_phone}
+                        <br />
+                        {customerInfo.eve_phone}
+                        <br />
+                        {customerInfo.mob_phone}
+                      </Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                </Table>
+              </Table.Cell>
             </Table.Row>
+
             <Table.Row>
-              <Table.Cell>Email</Table.Cell>
-              <Table.Cell>{customerInfo.email}</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Address</Table.Cell>
+              <Table.Cell>
+                Address
+                <Icon name="edit" onClick={() => this.handleModalOpen('customer_address')} style={{ paddingLeft: '5px' }} />
+              </Table.Cell>
               <Table.Cell>
                 {customerInfo.address_1}
                 <br />
@@ -53,9 +119,152 @@ class ProfilePage extends Component {
                 {customerInfo.country}
               </Table.Cell>
             </Table.Row>
+
+            <Table.Row>
+              <Table.Cell>
+                Billing
+                <Icon name="edit" onClick={() => this.handleModalOpen('customer_card')} style={{ paddingLeft: '5px' }} />
+              </Table.Cell>
+              <Table.Cell>{customerInfo.credit_card}</Table.Cell>
+            </Table.Row>
           </Table.Body>
         </Table>
+
+        <Modal
+          open={activeModal !== null}
+          onClose={this.handleModalClose}
+          size="tiny"
+          closeIcon={!loading}
+          closeOnEscape={false}
+          closeOnDimmerClick={false}
+        >
+          <Modal.Content>
+            { activeModal === 'customer_card' && this.editCustomerCard()}
+            { activeModal === 'customer_details' && this.editCustomerDetails()}
+            { activeModal === 'customer_address' && this.editCustomerAddress()}
+          </Modal.Content>
+        </Modal>
+
       </React.Fragment>
+    );
+  }
+
+  editCustomerDetails = () => {
+    return (
+      <Form size="small">
+        <Header icon="user" content="Edit details" />
+        <Form.Input
+          fluid
+          placeholder="Name"
+        />
+        <Form.Input
+          fluid
+          placeholder="Email"
+        />
+
+        <Form.Group widths={2}>
+          <Form.Input
+            placeholder="Day Phone Number"
+          />
+          <Form.Input
+            placeholder="Night Phone Number"
+          />
+        </Form.Group>
+
+        <Form.Group widths={2}>
+          <Form.Input
+            placeholder="Mobile Phone Number"
+            name="mob_phone"
+          />
+          <Form.Input
+            fluid
+            placeholder="Password"
+            type="password"
+            name="password"
+            // value={password}
+            // onChange={this.handleChange}
+          />
+        </Form.Group>
+        <Button
+          onClick={() => this.props.updateCustomerDetails(this.state.customerDetails)}
+          className="yellish roundish"
+          size="large"
+        >
+            Save
+        </Button>
+      </Form>
+    );
+  }
+
+  editCustomerAddress = () => {
+    const { shippingRegion } = this.props;
+    return (
+      <Form size="small">
+        <Header icon="user" content="Edit address" />
+        <Form.Input
+          fluid
+          placeholder="Address"
+        />
+        <Form.Input
+          fluid
+          placeholder="Address"
+        />
+
+        <Form.Group widths={2}>
+          <Form.Input
+            placeholder="City"
+          />
+          <Form.Input
+            placeholder="Region"
+          />
+          <Form.Select options={shippingRegion || []} placeholder="Region" />
+        </Form.Group>
+
+        <Form.Group widths={2}>
+          <Form.Input
+            placeholder="Postcode"
+          />
+          <Form.Input
+            fluid
+            placeholder="Country"
+          />
+        </Form.Group>
+        <Button
+          onClick={() => this.props.updateCustomerAddress(this.state.customerAddress)}
+          className="yellish roundish"
+          size="large"
+        >
+            Save
+        </Button>
+      </Form>
+    );
+  }
+
+  editCustomerCard = () => {
+    const { loading } = this.props;
+    const { creditCard } = this.state;
+    return (
+      <Form size="small">
+        <Header icon="credit card" content="Edit saved card" />
+        <Form.Input
+          fluid
+          icon="credit card"
+          iconPosition="left"
+          placeholder="Card Number"
+          onChange={(_e, { value }) => this.setState({ creditCard: value })}
+        />
+        <Button
+          className="yellish roundish"
+          size="large"
+          loading={loading}
+          disabled={
+            !creditCard || creditCard - Math.floor(creditCard) !== 0 || creditCard.length < 10
+          }
+          onClick={() => this.props.updateCustomerCard(creditCard)}
+        >
+            Save card
+        </Button>
+      </Form>
     );
   }
 
@@ -120,7 +329,7 @@ class ProfilePage extends Component {
     const { wishlistProducts } = this.props;
     return (
       <React.Fragment>
-        <Header textAlign="center">Wishlist</Header>
+        <Header>Wishlist</Header>
         <List divided verticalAlign="middle">
           {(wishlistProducts && wishlistProducts.length > 0) ? wishlistProducts.map(({
             item_id, name, price, attributes,
@@ -148,7 +357,6 @@ class ProfilePage extends Component {
   }
 
   getMenuView = () => {
-    this.getMenuItems();
     const { pathname } = this.props.history.location;
     switch (pathname) {
       case '/account':
@@ -223,11 +431,20 @@ const mapStateToProps = state => ({
   customerOrders: state.order.customerOrders,
   customerOrderInfo: state.order.customerOrderInfo,
   customerInfo: state.customer.customerInfo,
+  loading: state.customer.loading,
   loggedIn: state.customer.loggedIn,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getWishlist, getCustomer, getCustomerOrders, moveToCart, getOrder,
+  getWishlist,
+  getCustomer,
+  getCustomerOrders,
+  moveToCart,
+  getOrder,
+  getShippings,
+  updateCustomerCard,
+  updateCustomerDetails,
+  updateCustomerAddress,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

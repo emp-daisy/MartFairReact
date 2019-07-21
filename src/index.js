@@ -10,7 +10,6 @@ import './styles/font.css';
 import './styles/index.css';
 import 'semantic-ui-css/semantic.min.css';
 import App from './views/App';
-import Register from './components/Register';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Checkout from './components/Checkout';
@@ -25,6 +24,7 @@ import { LOGIN_CONFIRM } from './action_types';
 import CartPage from './containers/CartPage';
 import ProfilePage from './containers/ProfilePage';
 import ProductListContainer from './containers/ProductListContainer';
+import RegisterPage from './containers/RegisterPage';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 const hasToken = getUserToken();
@@ -42,7 +42,7 @@ ReactDOM.render(
               <Route path="/" exact component={App} />
               <Route path="/catalog-search" exact component={CatalogSearch} />
               <Route path="/login" exact component={LoginPage} />
-              <Route path="/register" exact component={Register} />
+              <Route path="/register" exact component={RegisterPage} />
               <Route path="/contact-us" exact component={Contact} />
               <Route path="/catalog/:id" exact component={ProductPage} />
               <Route path="/catalog" component={ProductListContainer} />

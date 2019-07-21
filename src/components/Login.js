@@ -26,7 +26,6 @@ const LoginForm = () => (
               placeholder="Password"
               type="password"
             />
-            <Form.Checkbox label="Remember me" />
             <Button className="yellish roundish" fluid size="large">
               Sign in
             </Button>
@@ -41,7 +40,7 @@ const LoginForm = () => (
                   <a className="yellish" href="/">Forgot password</a>
                 </Grid.Column>
                 <Grid.Column width={8}>
-                  <a className="yellish" href="/register">Have an account?</a>
+                  <a className="yellish" href="/register">Don't have an account?</a>
                 </Grid.Column>
               </Grid.Row>
             </Grid>
