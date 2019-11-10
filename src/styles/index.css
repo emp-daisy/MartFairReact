@@ -1,3 +1,5 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
 body {
   margin: 0;
   padding: 0;
@@ -93,3 +95,17 @@ a.yellish:hover {
   .scrolling-wrapper .item {
     display: inline-block;
   }
+
+  .image-gallery {
+    width: 100%;
+    height: auto;
+}
+
+.image-gallery-slide img {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: cover;
+    overflow: hidden;
+    object-position: center center;
+}

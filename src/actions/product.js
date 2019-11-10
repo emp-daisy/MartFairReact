@@ -30,7 +30,7 @@ export const getProducts = ({
 };
 
 export const searchProducts = ({
-  query_string, all_words = 'on', page = 1, limit = 20, description_length = 200,
+  query_string, all_words = 'on', page = 1, limit = 5, description_length = 200,
 } = {}) => async (dispatch) => {
   dispatch({ type: GET_SEARCH_PRODUCT_PENDING });
   try {

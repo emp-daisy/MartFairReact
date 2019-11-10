@@ -17,7 +17,6 @@ class SearchProduct extends Component {
 
   handleSearchChange = (e, { value }) => {
     this.setState({ value });
-
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent();
       return this.props.onSearchChange(value);
@@ -26,7 +25,6 @@ class SearchProduct extends Component {
 
   render() {
     const { isLoading, searchResult } = this.props;
-
     return (
       <Search
         size="mini"

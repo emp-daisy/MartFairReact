@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import {
-  Grid, Card, Image, Pagination, Select, Menu, Responsive, Placeholder,
+  Grid, Card, Image, Pagination, Select, Menu, Responsive,
 } from 'semantic-ui-react';
 import ProductFilter from './ProductFilter';
+import ProductListLoader from './placeholders/ProductListLoader';
 
 const sortOptions = [
   { key: 'mpop', text: 'Most Popular', value: 'popular' },
@@ -19,15 +19,11 @@ const ProductList = ({
     <Grid style={{ margin: '10px' }} stackable>
       <Grid.Row>
         <Grid.Column textAlign="right">
-          <label>
-            Sort
-            {'    '}
-            <Select
-              placeholder="Sort By"
-              disabled={loading}
-              options={sortOptions}
-            />
-          </label>
+          <Select
+            placeholder="Sort By"
+            disabled={loading}
+            options={sortOptions}
+          />
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
@@ -37,25 +33,7 @@ const ProductList = ({
             {...(window && window.innerWidth < Responsive.onlyMobile.maxWidth)
               ? { centered: true } : {}}
           >
-
-            { loading && (
-              _.times(4, index => (
-                <Card key={index} style={{ width: '180px' }}>
-                  <Placeholder>
-                    <Placeholder.Image square />
-                  </Placeholder>
-                  <Card.Content textAlign="center">
-                    <Placeholder>
-                      <Placeholder.Header>
-                        <Placeholder.Line length="medium" />
-                      </Placeholder.Header>
-                      <Placeholder.Paragraph>
-                        <Placeholder.Line length="short" />
-                      </Placeholder.Paragraph>
-                    </Placeholder>
-                  </Card.Content>
-                </Card>
-              )))}
+            { loading && <ProductListLoader /> }
             { !loading && products.map(({
               product_id: id, thumbnail, name, price,
             }) => (
@@ -77,37 +55,40 @@ const ProductList = ({
             ))}
           </Card.Group>
           {(!loading && products && products.length > 0) && (
-          <Grid.Row style={{ margin: '30px 0' }}>
-            <Pagination
-              defaultActivePage={currentPage}
-              totalPages={totalCount / numberPerPage}
-              ellipsisItem={null}
-              firstItem={null}
-              lastItem={null}
-              siblingRange={1}
-              onPageChange={onPageChange}
-            />
-            <Menu text compact floated="right">
-              <Menu.Item header>View:</Menu.Item>
-              <Menu.Item
-                name="24"
-                active={numberPerPage === 24}
-                onClick={() => onLimitChange(24)}
+            <Grid.Row style={{ margin: '30px 0' }}>
+              <Pagination
+                defaultActivePage={currentPage}
+                totalPages={Math.ceil(totalCount / numberPerPage)}
+                ellipsisItem={null}
+                firstItem={null}
+                lastItem={null}
+                siblingRange={1}
+                onPageChange={onPageChange}
               />
-              <Menu.Item
-                name="50"
-                active={numberPerPage === 50}
-                onClick={() => onLimitChange(50)}
-              />
-              <Menu.Item
-                name="100"
-                active={numberPerPage === 100}
-                onClick={() => onLimitChange(100)}
-              />
-            </Menu>
-          </Grid.Row>
-          )
-          }
+              <Menu text compact floated="right">
+                <Menu.Item header>View:</Menu.Item>
+                <Menu.Item
+                  name="24"
+                  active={numberPerPage === 24}
+                  onClick={() => onLimitChange(24)}
+                />
+                {totalCount > 51 && (
+                  <Menu.Item
+                    name="50"
+                    active={numberPerPage === 50}
+                    onClick={() => onLimitChange(50)}
+                  />
+                )}
+                {totalCount > 101 && (
+                <Menu.Item
+                  name="100"
+                  active={numberPerPage === 100}
+                  onClick={() => onLimitChange(100)}
+                />
+                )}
+              </Menu>
+            </Grid.Row>
+          )}
         </Grid.Column>
       </Grid.Row>
     </Grid>

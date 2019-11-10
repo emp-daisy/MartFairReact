@@ -11,6 +11,7 @@ import {
 import { getShippings } from '../actions/shipping';
 import { getCustomerOrders, getOrder } from '../actions/order';
 import Page404 from '../components/Page404';
+import PageLoader from '../components/placeholders/PageLoader';
 
 class ProfilePage extends Component {
   state = {
@@ -67,7 +68,6 @@ class ProfilePage extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-
             <Table.Row>
               <Table.Cell>
                 <Table style={{ border: 'none' }}>
@@ -101,7 +101,6 @@ class ProfilePage extends Component {
                 </Table>
               </Table.Cell>
             </Table.Row>
-
             <Table.Row>
               <Table.Cell>
                 Address
@@ -119,7 +118,6 @@ class ProfilePage extends Component {
                 {customerInfo.country}
               </Table.Cell>
             </Table.Row>
-
             <Table.Row>
               <Table.Cell>
                 Billing
@@ -129,7 +127,6 @@ class ProfilePage extends Component {
             </Table.Row>
           </Table.Body>
         </Table>
-
         <Modal
           open={activeModal !== null}
           onClose={this.handleModalClose}
@@ -144,57 +141,54 @@ class ProfilePage extends Component {
             { activeModal === 'customer_address' && this.editCustomerAddress()}
           </Modal.Content>
         </Modal>
-
       </React.Fragment>
     );
   }
 
-  editCustomerDetails = () => {
-    return (
-      <Form size="small">
-        <Header icon="user" content="Edit details" />
+  editCustomerDetails = () => (
+    <Form size="small">
+      <Header icon="user" content="Edit details" />
+      <Form.Input
+        fluid
+        placeholder="Name"
+      />
+      <Form.Input
+        fluid
+        placeholder="Email"
+      />
+
+      <Form.Group widths={2}>
         <Form.Input
-          fluid
-          placeholder="Name"
+          placeholder="Day Phone Number"
+        />
+        <Form.Input
+          placeholder="Night Phone Number"
+        />
+      </Form.Group>
+
+      <Form.Group widths={2}>
+        <Form.Input
+          placeholder="Mobile Phone Number"
+          name="mob_phone"
         />
         <Form.Input
           fluid
-          placeholder="Email"
+          placeholder="Password"
+          type="password"
+          name="password"
+          // value={password}
+          // onChange={this.handleChange}
         />
-
-        <Form.Group widths={2}>
-          <Form.Input
-            placeholder="Day Phone Number"
-          />
-          <Form.Input
-            placeholder="Night Phone Number"
-          />
-        </Form.Group>
-
-        <Form.Group widths={2}>
-          <Form.Input
-            placeholder="Mobile Phone Number"
-            name="mob_phone"
-          />
-          <Form.Input
-            fluid
-            placeholder="Password"
-            type="password"
-            name="password"
-            // value={password}
-            // onChange={this.handleChange}
-          />
-        </Form.Group>
-        <Button
-          onClick={() => this.props.updateCustomerDetails(this.state.customerDetails)}
-          className="yellish roundish"
-          size="large"
-        >
-            Save
-        </Button>
-      </Form>
-    );
-  }
+      </Form.Group>
+      <Button
+        onClick={() => this.props.updateCustomerDetails(this.state.customerDetails)}
+        className="yellish roundish"
+        size="large"
+      >
+          Save
+      </Button>
+    </Form>
+  )
 
   editCustomerAddress = () => {
     const { shippingRegion } = this.props;
@@ -389,9 +383,8 @@ class ProfilePage extends Component {
   };
 
   render() {
-    if (!this.props.loggedIn) {
-      this.props.history.replace('/');
-    }
+    if (!this.props.loggedIn) this.props.history.replace('/');
+    const { loading } = this.props;
     const { pathname } = this.props.history.location;
     return (
       <Container style={{ padding: '30px 0' }}>
@@ -417,7 +410,7 @@ class ProfilePage extends Component {
           </Grid.Column>
           <Grid.Column stretched tablet={12} mobile={11} computer={11}>
             <Segment>
-              {this.getMenuView()}
+              {loading ? <PageLoader /> : this.getMenuView()}
             </Segment>
           </Grid.Column>
         </Grid>

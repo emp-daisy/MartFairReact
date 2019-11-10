@@ -1,19 +1,21 @@
 import React from 'react';
 import { Input, Button } from 'semantic-ui-react';
 
-const NumberInput = ({ defaultValue = 1, onChange, id }) => {
+const NumberInput = ({
+  defaultValue = 1, onChange = () => {}, disabled,
+}) => {
   let value = defaultValue;
   const minusBtn = () => {
     value -= 1;
-    onChange(id, value);
+    onChange(value);
   };
   const plusBtn = () => {
     value += 1;
-    onChange(id, value);
+    onChange(value);
   };
   return (
     <div>
-      <Button icon="minus" size="mini" circular onClick={minusBtn} />
+      <Button disabled={disabled} icon="minus" size="mini" circular onClick={minusBtn} />
       <Input
         disabled
         size="mini"
@@ -23,7 +25,7 @@ const NumberInput = ({ defaultValue = 1, onChange, id }) => {
         className="number-counter"
         style={{ margin: '5px' }}
       />
-      <Button icon="plus" size="mini" circular onClick={plusBtn} />
+      <Button disabled={disabled} icon="plus" size="mini" circular onClick={plusBtn} />
     </div>
   );
 };

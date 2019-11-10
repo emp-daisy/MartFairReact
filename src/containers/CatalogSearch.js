@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import queryString from 'query-string';
-import ProductList from '../components/ProductList';
+import ProductList from '../components/placeholders/ProductListLoader';
 import { searchProducts } from '../actions/product';
 
 class CatalogSearch extends Component {

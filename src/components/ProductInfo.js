@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Image, Grid, List, Tab, Header, Rating, Button, Label, Item, Responsive, Container,
+  Image, Grid, List, Tab, Header, Rating, Button, Label, Item, Responsive, Container, Select, Modal,
 } from 'semantic-ui-react';
-import NumberInput from './NumberInput';
+import ImageGallery from 'react-image-gallery';
 import ProductRelated from './ProductRelated';
 
 const panes = [
@@ -42,8 +42,24 @@ const panes = [
   },
 ];
 
+const ImageSlide = ({ onZoom, images }) => (
+  <Modal
+    open
+    onClose={onZoom}
+    closeIcon
+    closeOnEscape
+    closeOnDimmerClick
+    size="tiny"
+  >
+    <Modal.Content>
+      <ImageGallery items={images} showFullscreenButton={false} showPlayButton={false} />
+    </Modal.Content>
+  </Modal>
+);
+
 const ProductInfo = ({
-  product, reviews, addToCart, onImageSwitch, selectedImg, averageRating,
+  product, reviews, addToCart, onImageSwitch, selectedImg, averageRating, onAttributeSelect,
+  attributes, missingAttributes, selectedAttributes, zoom, onZoom,
 }) => (
   <Container>
     <Grid stackable textAlign="center" style={{ padding: '20px 0' }}>
@@ -55,8 +71,9 @@ const ProductInfo = ({
                 <Image
                   className="ui centered image"
                   size="small"
-                  style={{ height: '150px', width: '150px' }}
+                  style={{ height: '200px', width: '200px', cursor: 'zoom-in' }}
                   src={`${process.env.PUBLIC_URL}/product_images/${selectedImg}`}
+                  onClick={onZoom}
                 />
               </div>
               <List divided horizontal verticalAlign="middle" style={{ padding: '10px 0' }}>
@@ -95,24 +112,33 @@ const ProductInfo = ({
               <Header as="h3">
                 <span>{ `$ ${product.price}`}</span>
                 <Label size="small" color="red" tag style={{ marginLeft: 30 }}>
-                  {' '}
-                  {`SALE: $ ${product.discounted_price}`}
+                  {` SALE: $ ${product.discounted_price}`}
                 </Label>
               </Header>
               <h5>
                 {product.description.substring(0, 200)}
               </h5>
-              <NumberInput />
-              <div style={{ padding: '20px 0' }}>
-                <Button className="yellish roundish" size="small" onClick={() => addToCart(product.product_id)}>
-                      Add to Cart
+              <Grid columns="equal">
+                {
+                  Object.keys(attributes).map(attr => (
+                    <Grid.Column>
+                      <label>{attr}</label>
+                      <br />
+                      <Select
+                        name={attr}
+                        onChange={onAttributeSelect}
+                        placeholder="Select your color"
+                        options={attributes[attr]}
+                        error={(missingAttributes && !selectedAttributes[attr]) ? { content: 'Please select an option!', pointing: 'below' } : false}
+                      />
+                    </Grid.Column>
+                  ))
+                }
+              </Grid>
+              <div style={{ padding: '20px 0', display: 'flex' }}>
+                <Button className="yellish roundish" style={{ margin: '0 10px' }} size="small" onClick={addToCart}>
+                  Add to Cart
                 </Button>
-                {/* <span style={{ marginLeft: 40 }}>
-                  <Rating icon="heart"
-                  onRate={(e, { rating }) => addToWishlist(product.product_id, rating)} />
-                  {' '}
-                  Add to wishlist
-                </span> */}
               </div>
             </Grid.Column>
           </Grid.Row>
@@ -144,6 +170,15 @@ const ProductInfo = ({
         <ProductRelated />
       </Grid.Row>
     </Grid>
+    { zoom && (
+      <ImageSlide
+        onZoom={onZoom}
+        images={[
+          `${process.env.PUBLIC_URL}/product_images/${product.image}`,
+          `${process.env.PUBLIC_URL}/product_images/${product.image_2}`,
+        ].map(pic => ({ original: pic, thumbnail: pic }))}
+      />
+    ) }
   </Container>
 );
 

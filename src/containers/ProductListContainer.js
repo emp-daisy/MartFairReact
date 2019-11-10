@@ -33,17 +33,20 @@ class ProductListContainer extends Component {
   }
 
   onLimitChange = (limit) => {
-    this.props.getProducts({ limit });
+    const { totalCount } = this.props;
+    if (totalCount > limit) this.props.getProducts({ limit });
   }
 
-  onPageChange = (e, { activePage }) => this.props.getProducts({ page: activePage })
+  onPageChange = (e, { activePage }) => this.props.getProducts({
+    page: activePage, limit: this.props.numberPerPage,
+  })
 
   render() {
     const {
       products, loading, error, errorMessage, numberPerPage, totalCount, currentPage,
     } = this.props;
     return (
-      (products && products.length > 0) ? (
+      ((products && products.length > 0) || loading) ? (
         <ProductList
           products={products}
           loading={loading}
@@ -55,7 +58,7 @@ class ProductListContainer extends Component {
           onLimitChange={this.onLimitChange}
           onPageChange={this.onPageChange}
         />
-      ) : <Page404 message="Products not found" />
+      ) : <Page404 message="No Products found" />
     );
   }
 }
