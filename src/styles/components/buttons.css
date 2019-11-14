@@ -1,0 +1,32 @@
+.ui.button.roundish {
+  border-radius: 500rem !important;
+}
+.ui.yellish.button,
+.ui.yellish.buttons .button {
+  background-color: #d29d05;
+  color: #ffffff;
+}
+.ui.yellish.button:hover,
+.ui.yellish.button:active,
+.ui.yellish.button:focus,
+.ui.yellish.buttons .button:hover {
+  background-color: #c5a138;
+  color: #ffffff;
+}
+.ui.yellish.inverted.button,
+.ui.yellish.inverted.buttons .button {
+  color: #d29d05;
+  border: 1px solid#c5a138;
+  background-color: #ffffff;
+}
+.ui.yellish.inverted.button:hover,
+.ui.yellish.inverted.buttons .button:hover {
+  color: #c5a138;
+  border: 1px solid#c5a138;
+  background-color: #ffffff;
+}
+.empty-button {
+  padding: 15px !important;
+  padding-left: 45px !important;
+  padding-right: 45px !important;
+}

@@ -1,6 +1,7 @@
 export const ADD_TO_CART_PENDING = 'add_cart_pending';
 export const ADD_TO_CART_PASS = 'add_cart_passed';
 export const ADD_TO_CART_FAIL = 'add_cart_failed';
+export const ADD_TO_CART_RESET = 'add_cart_reset';
 export const GET_CART_PRODUCTS_PENDING = 'get_cart_pending';
 export const GET_CART_PRODUCTS_PASS = 'get_cart_passed';
 export const GET_CART_PRODUCTS_FAIL = 'get_cart_failed';

@@ -1,0 +1,108 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1 {
+  font-family: "PlayfairDisplayBold", serif !important;
+}
+h2,
+h3,
+h4 {
+  font-family: "MontserratBold", sans-serif !important;
+}
+h5,
+h6,
+p {
+  font-family: "OpenSans", sans-serif !important;
+}
+
+:focus {
+  outline: none;
+}
+
+#root {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+}
+
+.align-self-center {
+  align-self: center;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+a.yellish {
+  color: #d29d05;
+}
+a.yellish:hover {
+  color: #000000;
+}
+
+.ui.yellish.header,
+.yellish {
+  color: #d29d05;
+}
+.ui.secondary.inverted.menu a.item.shopping-icon {
+  color: #ffffff !important;
+}
+.checkout.ui.steps .step.active .title {
+  color: #ffffff;
+}
+.checkout.ui.steps .step.active,
+.checkout.ui.steps .step.active:after {
+  background: #c5a138;
+}
+.number-counter.ui.input input {
+  border-radius: 50px;
+  width: 45px;
+  text-align: center;
+}
+.small-lead {
+  font-size: 14px;
+  font-weight: normal;
+  color: #6c6c6c;
+}
+.greyish {
+  color: #6c6c6c !important;
+}
+.scrolling-wrapper {
+  /* overflow-x: scroll; */
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding: 15px 0;
+}
+.scrolling-wrapper .card,
+.scrolling-wrapper .item {
+  display: inline-block;
+}
+
+.image-gallery {
+  width: 100%;
+  height: auto;
+}
+
+.image-gallery-slide img {
+  width: 100%;
+  height: auto;
+  max-height: 450px;
+  object-fit: contain;
+  overflow: hidden;
+  object-position: center center;
+}

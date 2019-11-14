@@ -1,5 +1,5 @@
 import {
-  ADD_TO_CART_PENDING, ADD_TO_CART_PASS, ADD_TO_CART_FAIL,
+  ADD_TO_CART_PENDING, ADD_TO_CART_PASS, ADD_TO_CART_FAIL, ADD_TO_CART_RESET,
   GET_CART_PRODUCTS_PENDING, GET_CART_PRODUCTS_PASS, GET_CART_PRODUCTS_FAIL,
   UPDATE_CART_QUANTITY_PENDING, UPDATE_CART_QUANTITY_PASS, UPDATE_CART_QUANTITY_FAIL,
   EMPTY_CART_PENDING, EMPTY_CART_PASS, EMPTY_CART_FAIL,
@@ -13,6 +13,10 @@ import {
 const initialState = {
   loggedIn: false,
   loading: false,
+  cartLoading: false,
+  addCartDone: false,
+  addLoading: false,
+  totalLoading: false,
   cartProducts: [],
   wishlistProducts: [],
   error: false,
@@ -25,42 +29,50 @@ export default (state = initialState, action) => {
     case GET_CART_PRODUCTS_PENDING:
       return {
         ...state,
-        loading: true,
+        cartLoading: true,
         error: false,
         errorMessage: '',
       };
     case GET_CART_PRODUCTS_PASS:
       return {
         ...state,
-        loading: false,
+        cartLoading: false,
         cartProducts: action.cart,
       };
     case GET_CART_PRODUCTS_FAIL:
       return {
         ...state,
-        loading: false,
+        cartLoading: false,
         error: true,
         errorMessage: action.errorMessage,
       };
     case ADD_TO_CART_PENDING:
       return {
         ...state,
-        loading: true,
+        addLoading: true,
+        addCartDone: false,
         error: false,
         errorMessage: '',
       };
     case ADD_TO_CART_PASS:
       return {
         ...state,
-        loading: false,
+        addLoading: false,
+        addCartDone: true,
         cartProducts: action.cart,
       };
     case ADD_TO_CART_FAIL:
       return {
         ...state,
-        loading: false,
+        addLoading: false,
+        addCartDone: false,
         error: true,
         errorMessage: action.errorMessage,
+      };
+    case ADD_TO_CART_RESET:
+      return {
+        ...state,
+        addCartDone: false,
       };
     case UPDATE_CART_QUANTITY_PENDING:
       return {
@@ -126,20 +138,20 @@ export default (state = initialState, action) => {
     case TOTAL_CART_PENDING:
       return {
         ...state,
-        loading: true,
+        totalLoading: true,
         error: false,
         errorMessage: '',
       };
     case TOTAL_CART_PASS:
       return {
         ...state,
-        loading: false,
+        loatotalLoadingding: false,
         totalAmount: action.total,
       };
     case TOTAL_CART_FAIL:
       return {
         ...state,
-        loading: false,
+        totalLoading: false,
         error: true,
         errorMessage: action.errorMessage,
       };

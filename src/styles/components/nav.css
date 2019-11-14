@@ -1,0 +1,10 @@
+.cart-badge {
+  padding: 3px !important;
+  top: 5px !important;
+  left: 50px !important;
+}
+
+.cart-badge .counter {
+    color: white;
+    padding: 2px;
+}

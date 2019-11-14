@@ -10,7 +10,7 @@ import {
 } from '../actions/customer';
 import { getShippings } from '../actions/shipping';
 import { getCustomerOrders, getOrder } from '../actions/order';
-import Page404 from '../components/Page404';
+import Erroring from '../components/Erroring';
 import PageLoader from '../components/placeholders/PageLoader';
 
 class ProfilePage extends Component {
@@ -57,7 +57,7 @@ class ProfilePage extends Component {
   handleItemClick = (_e, { name }) => this.props.history.push(`/${name}`)
 
   customerDetails = () => {
-    const { customerInfo, loading } = this.props;
+    const { customerInfo = {}, loading } = this.props;
     const { activeModal } = this.state;
     return (
       <React.Fragment>
@@ -360,7 +360,7 @@ class ProfilePage extends Component {
       case '/wishlist':
         return this.customerWishlist();
       default:
-        return <Page404 message="Seems you lost your way" />;
+        return <Erroring message="Seems you lost your way" icon="exclamation triangle" />;
     }
   }
 

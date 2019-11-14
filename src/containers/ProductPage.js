@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import { getProduct, getProducts, getProductReview } from '../actions/product';
+import {
+  getProduct, getProducts, getProductReview, getRelatedProduct,
+} from '../actions/product';
 import { getAttributesForProduct } from '../actions/attribute';
 import { addToCart, addToWishlist, removeProductFromCart } from '../actions/cart';
 import ProductInfo from '../components/ProductInfo';
-import Page404 from '../components/Page404';
+import Erroring from '../components/Erroring';
 import ProductInfoLoader from '../components/placeholders/ProductInfoLoader';
 
 class ProductPage extends Component {
@@ -19,13 +21,25 @@ class ProductPage extends Component {
   };
 
   componentDidMount() {
+    this.getContent();
+  }
+
+  componentDidUpdate(prevProps) {
+    const productId = this.props.match.params.id;
+    if (productId && productId !== prevProps.match.params.id) {
+      this.getContent();
+    }
+  }
+
+  componentWillUnmount() { this.props.getProducts(); }
+
+  getContent = () => {
     const productId = this.props.match.params.id;
     this.props.getProduct(productId);
     this.props.getAttributesForProduct(productId);
     this.props.getProductReview(productId);
+    this.props.getRelatedProduct(productId);
   }
-
-  componentWillUnmount() { this.props.getProducts(); }
 
   addToCart = () => {
     const attr = [...new Set(this.props.attributes.map(item => item.attribute_name))];
@@ -57,7 +71,7 @@ class ProductPage extends Component {
 
   render() {
     const {
-      product, reviews, loading, attributes,
+      product, reviews, loading, attributes, relatedProducts,
     } = this.props;
     const {
       selectedImg, quantity, selectedAttributes, missingAttributes, zoom,
@@ -87,12 +101,13 @@ class ProductPage extends Component {
             missingAttributes={missingAttributes}
             zoom={zoom}
             onZoom={this.onZoom}
+            relatedProducts={relatedProducts}
           />
         )
           : (
             <React.Fragment>
               {
-                (loading) ? <ProductInfoLoader /> : <Page404 />
+                (loading) ? <ProductInfoLoader /> : <Erroring icon="exclamation triangle" />
               }
             </React.Fragment>
           )}
@@ -104,6 +119,8 @@ class ProductPage extends Component {
 const mapStateToProps = state => ({
   loading: state.product.loading,
   product: state.product.productInfo,
+  relatedProducts: state.product.relatedProducts,
+  loadingRelated: state.product.relatedLoading,
   loadingAttributes: state.attribute.loading,
   attributes: state.attribute.attributeInfo || [],
   reviews: state.product.productReviews,
@@ -115,6 +132,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getProducts,
   getAttributesForProduct,
   getProductReview,
+  getRelatedProduct,
   addToCart,
   addToWishlist,
   removeProductFromCart,

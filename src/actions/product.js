@@ -2,6 +2,7 @@ import axios from './rest_client';
 import {
   GET_PRODUCTS_PENDING, GET_PRODUCTS_PASS, GET_PRODUCTS_FAIL,
   GET_PRODUCT_PENDING, GET_PRODUCT_PASS, GET_PRODUCT_FAIL,
+  GET_RELATED_PRODUCT_PENDING, GET_RELATED_PRODUCT_PASS, GET_RELATED_PRODUCT_FAIL,
   GET_PRODUCT_DETAILS_PENDING, GET_PRODUCT_DETAILS_PASS, GET_PRODUCT_DETAILS_FAIL,
   GET_PRODUCT_LOCATION_PENDING, GET_PRODUCT_LOCATION_PASS, GET_PRODUCT_LOCATION_FAIL,
   GET_PRODUCTS_INDEPARTMENT_PENDING, GET_PRODUCTS_INDEPARTMENT_PASS, GET_PRODUCTS_INDEPARTMENT_FAIL,
@@ -56,6 +57,18 @@ export const getProduct = id => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: GET_PRODUCT_FAIL, errorMessage: error.message });
+  }
+};
+export const getRelatedProduct = id => async (dispatch) => {
+  dispatch({ type: GET_RELATED_PRODUCT_PENDING });
+  try {
+    const response = await axios.get(`/products/${id}/related`);
+    const products = response.data;
+    dispatch({
+      type: GET_RELATED_PRODUCT_PASS, products,
+    });
+  } catch (error) {
+    dispatch({ type: GET_RELATED_PRODUCT_FAIL, errorMessage: error.message });
   }
 };
 export const getProductByCategory = ({

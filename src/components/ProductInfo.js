@@ -22,8 +22,10 @@ const panes = [
     render: ({ reviews }) => (
       <Tab.Pane attached={false}>
         <Item.Group>
-          { (reviews && reviews.length > 0) ? reviews.map(({ name, review, rating }) => (
-            <Item>
+          { (reviews && reviews.length > 0) ? reviews.map(({
+            review_id: id, name, review, rating,
+          }) => (
+            <Item key={id}>
               <Item.Content>
                 <Item.Header>{name}</Item.Header>
                 <Item.Meta><Rating icon="star" size="tiny" rating={rating} maxRating={5} disabled /></Item.Meta>
@@ -59,7 +61,7 @@ const ImageSlide = ({ onZoom, images }) => (
 
 const ProductInfo = ({
   product, reviews, addToCart, onImageSwitch, selectedImg, averageRating, onAttributeSelect,
-  attributes, missingAttributes, selectedAttributes, zoom, onZoom,
+  attributes, missingAttributes, selectedAttributes, zoom, onZoom, relatedProducts = [],
 }) => (
   <Container>
     <Grid stackable textAlign="center" style={{ padding: '20px 0' }}>
@@ -111,9 +113,11 @@ const ProductInfo = ({
               </span>
               <Header as="h3">
                 <span>{ `$ ${product.price}`}</span>
-                <Label size="small" color="red" tag style={{ marginLeft: 30 }}>
-                  {` SALE: $ ${product.discounted_price}`}
-                </Label>
+                { product.discounted_price > 0 && (
+                  <Label size="small" color="red" tag style={{ marginLeft: 30 }}>
+                    {` SALE: $ ${product.discounted_price}`}
+                  </Label>
+                )}
               </Header>
               <h5>
                 {product.description.substring(0, 200)}
@@ -121,7 +125,7 @@ const ProductInfo = ({
               <Grid columns="equal">
                 {
                   Object.keys(attributes).map(attr => (
-                    <Grid.Column>
+                    <Grid.Column key={attr}>
                       <label>{attr}</label>
                       <br />
                       <Select
@@ -166,9 +170,11 @@ const ProductInfo = ({
           />
         </Responsive>
       </Grid.Row>
-      <Grid.Row>
-        <ProductRelated />
-      </Grid.Row>
+      {relatedProducts.length && (
+        <Grid.Row>
+          <ProductRelated products={relatedProducts} />
+        </Grid.Row>
+      )}
     </Grid>
     { zoom && (
       <ImageSlide

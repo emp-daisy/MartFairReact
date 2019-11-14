@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { bindActionCreators } from 'redux';
 import ProductList from '../components/ProductList';
 import { getProducts, getProductByDepartment } from '../actions/product';
-import Page404 from '../components/Page404';
+import Erroring from '../components/Erroring';
 
 
 class ProductListContainer extends Component {
@@ -58,7 +58,7 @@ class ProductListContainer extends Component {
           onLimitChange={this.onLimitChange}
           onPageChange={this.onPageChange}
         />
-      ) : <Page404 message="No Products found" />
+      ) : <Erroring message="No Products found" />
     );
   }
 }

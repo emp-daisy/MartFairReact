@@ -7,11 +7,7 @@ import {
   Button,
   Container,
   Responsive,
-  Image,
-  Rating,
 } from 'semantic-ui-react';
-import NumberInput from '../components/NumberInput';
-import logo from '../assets/a-partridge-in-a-pear-tree-2.gif';
 import {
   getCartProducts,
   updateProductQuantity,
@@ -19,10 +15,9 @@ import {
   totalAmount,
   addToWishlist,
 } from '../actions/cart';
-
-const getWidth = () => (typeof window === 'undefined'
-  ? Responsive.onlyTablet.minWidth
-  : window.innerWidth);
+import Cart from '../components/Cart';
+import Erroring from '../components/Erroring';
+import CartLoader from '../components/placeholders/CartLoader';
 
 class CartPage extends Component {
   componentDidMount() {
@@ -46,127 +41,9 @@ class CartPage extends Component {
     this.props.removeProductFromCart(item_id);
   };
 
-  addToWishList = (item_id) => {
-    this.props.addToWishList(item_id);
-  };
-
-  wishlistBtn = item_id => (
-    <span>
-      <Rating
-        icon="heart"
-        onRate={() => this.props.addToWishlist(item_id)}
-      />
-      {' '}
-      save for later
-    </span>
-  );
-
-  cartRow = ({
-    name, attributes, price, subtotal, quantity, item_id,
-  }) => (
-    <React.Fragment>
-      <Responsive
-        as={React.Fragment}
-        getWidth={getWidth}
-        minWidth={Responsive.onlyTablet.minWidth}
-      >
-        <Table.Cell>
-          <Header as="h4">
-            <Image className="ui image" size="mini" src={logo} />
-            {name}
-          </Header>
-        </Table.Cell>
-        <Table.Cell>{attributes}</Table.Cell>
-        <Table.Cell>
-          <NumberInput
-            defaultValue={quantity}
-            onChange={this.updateProductQuantity}
-            id={item_id}
-          />
-          {this.wishlistBtn(item_id)}
-        </Table.Cell>
-        <Table.Cell>
-          <Header as="h4">{price}</Header>
-        </Table.Cell>
-        <Table.Cell>
-          <Header as="h3">{subtotal}</Header>
-          <a
-            className="yellish"
-            href="/"
-            onClick={(e) => {
-              this.removeItem(e, item_id);
-            }}
-          >
-            Remove
-            {' '}
-          </a>
-        </Table.Cell>
-      </Responsive>
-      <Responsive
-        as={React.Fragment}
-        getWidth={getWidth}
-        maxWidth={Responsive.onlyMobile.maxWidth}
-      >
-        <Table.Cell textAlign="center">
-          <Image className="ui centered image" size="mini" src={logo} />
-          <Header as="h4" style={{ marginBottom: 0 }}>
-            {name}
-          </Header>
-          <p>{attributes}</p>
-        </Table.Cell>
-        <Table.Cell singleLine textAlign="center">
-          <NumberInput defaultValue={quantity} />
-          {this.wishlistBtn(item_id)}
-          <Header as="h4">{price}</Header>
-        </Table.Cell>
-        <Table.Cell textAlign="center">
-          <Header as="h3">{subtotal}</Header>
-          <a
-            className="yellish"
-            href="/"
-            onClick={(e) => {
-              this.removeItem(e, item_id);
-            }}
-          >
-            Remove
-          </a>
-        </Table.Cell>
-      </Responsive>
-    </React.Fragment>
-  );
-
-  cartHeader = () => (
-    <React.Fragment>
-      <Responsive
-        as={React.Fragment}
-        getWidth={getWidth}
-        minWidth={Responsive.onlyTablet.minWidth}
-      >
-        <Table.HeaderCell singleLine> Item </Table.HeaderCell>
-        <Table.HeaderCell>Attributes</Table.HeaderCell>
-        <Table.HeaderCell>Quantity</Table.HeaderCell>
-        <Table.HeaderCell>Unit Price</Table.HeaderCell>
-        <Table.HeaderCell>Sub Total</Table.HeaderCell>
-      </Responsive>
-      <Responsive
-        as={React.Fragment}
-        getWidth={getWidth}
-        maxWidth={Responsive.onlyMobile.maxWidth}
-      >
-        <Table.HeaderCell singleLine textAlign="center">
-          Item / Size
-        </Table.HeaderCell>
-        <Table.HeaderCell textAlign="center">
-          Quantity \ Unit Price
-        </Table.HeaderCell>
-        <Table.HeaderCell textAlign="center">Sub Total</Table.HeaderCell>
-      </Responsive>
-    </React.Fragment>
-  );
-
   render() {
     const isMobileColumn = window && window.innerWidth < Responsive.onlyMobile.maxWidth ? 3 : 5;
-    const { products, totalCost } = this.props;
+    const { products, totalCost, cartLoading } = this.props;
     return (
       <Container textAlign="center">
         <Header textAlign="center" as="h2" style={{ margin: '15px auto' }}>
@@ -175,12 +52,18 @@ class CartPage extends Component {
         {products && products.length > 0 ? (
           <Table unstackable>
             <Table.Header>
-              <Table.Row>{this.cartHeader()}</Table.Row>
+              <Table.Row><Cart.Header /></Table.Row>
             </Table.Header>
             <Table.Body>
               {products.map(product => (
                 <Table.Row key={product.item_id}>
-                  {this.cartRow(product)}
+                  <Cart.Row
+                    {...product}
+                    removeItem={this.removeItem}
+                    updateProductQuantity={value => (
+                      this.updateProductQuantity(product.item_id, value))}
+                    addToWishlist={this.props.addToWishlist}
+                  />
                 </Table.Row>
               ))}
             </Table.Body>
@@ -217,7 +100,9 @@ class CartPage extends Component {
             </Table.Footer>
           </Table>
         ) : (
-          <div>No item in cart</div>
+          <React.Fragment>
+            { (cartLoading) ? <CartLoader /> : <Erroring message="No item in cart" icon="shopping cart" /> }
+          </React.Fragment>
         )}
       </Container>
     );
@@ -227,6 +112,8 @@ class CartPage extends Component {
 const mapStateToProps = state => ({
   products: state.cart.cartProducts,
   totalCost: state.cart.totalAmount,
+  cartLoading: state.cart.cartLoading,
+  totalLoading: state.cart.totalLoading,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

@@ -40,11 +40,11 @@ class NavBar extends Component {
           <React.Fragment>
             {pathname !== '/login' && <Dropdown.Item as="a" href="/login" text="Login" />}
             {pathname !== '/register' && <Dropdown.Item as="a" href="/register" text="Register" />}
+            <Dropdown.Divider />
           </React.Fragment>
           )}
           {loggedIn && (
           <React.Fragment>
-            <Dropdown.Divider />
             {pathname !== '/account' && <Dropdown.Item as="a" href="/account" text="My account" />}
             {pathname !== '/orders' && <Dropdown.Item as="a" href="/orders" text="My orders" />}
             {pathname !== '/wishlist' && <Dropdown.Item as="a" href="/wishlist" text="My saved items" />}
@@ -64,12 +64,8 @@ class NavBar extends Component {
         <Icon name="shopping cart" size="large" />
         { cartSize > 0
           && (
-          <div
-            id="live_message_badge_main_header"
-            className="floating ui red label"
-            style={{ padding: '3px', top: '10px', left: '55px' }}
-          >
-            <span className="live_message_badge">{cartSize}</span>
+          <div className="floating ui red label cart-badge">
+            <span className="counter">{cartSize}</span>
           </div>
           )
         }

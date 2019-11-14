@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Grid, Card, Image, Pagination, Select, Menu, Responsive,
+  Grid, Card, Image, Pagination, Select, Menu,
 } from 'semantic-ui-react';
 import ProductFilter from './ProductFilter';
 import ProductListLoader from './placeholders/ProductListLoader';
@@ -27,12 +27,9 @@ const ProductList = ({
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column mobile="16" tablet="4" computer="3"><ProductFilter /></Grid.Column>
-        <Grid.Column mobile="16" tablet="12" computer="13" textAlign="center">
-          <Card.Group
-            {...(window && window.innerWidth < Responsive.onlyMobile.maxWidth)
-              ? { centered: true } : {}}
-          >
+        <Grid.Column mobile="16" tablet="4" computer="4"><ProductFilter /></Grid.Column>
+        <Grid.Column mobile="16" tablet="12" computer="12" textAlign="center">
+          <Card.Group textAlign="center" centered>
             { loading && <ProductListLoader /> }
             { !loading && products.map(({
               product_id: id, thumbnail, name, price,

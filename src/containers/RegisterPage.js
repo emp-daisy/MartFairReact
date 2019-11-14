@@ -29,7 +29,7 @@ class RegisterPage extends Component {
     // eslint-disable-next-line no-useless-escape
     || password.trim().length < 1 || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
     || password !== confirmPassword;
-    return disabled
+    return disabled;
   }
 
   render() {
@@ -40,7 +40,7 @@ class RegisterPage extends Component {
     const { fullName, email, password, confirmPassword } = this.state;
     const disabledLogin = this.vaidateForm();
     return (
-      <Grid textAlign="center" verticalAlign="middle" style={{ margin: 'auto 0' }}>
+      <Grid container textAlign="center" verticalAlign="middle" style={{ margin: 'auto 0' }}>
         <Grid.Row>
           <Grid.Column style={{ maxWidth: 450 }}>
             {error && <Message attached error>{errorMessage}</Message>}

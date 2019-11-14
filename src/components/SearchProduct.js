@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Search, Image } from 'semantic-ui-react';
 
 class SearchProduct extends Component {
-  componentWillMount() {
-    this.resetComponent();
+  state = {
+    value: '',
   }
 
   resetComponent = () => this.setState({ value: '' })
@@ -32,7 +32,12 @@ class SearchProduct extends Component {
         loading={isLoading}
         onResultSelect={this.handleResultSelect}
         onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
-        results={searchResult}
+        results={searchResult.map(result => ({
+          ...result,
+          key: result.product_id,
+          price: result.price.toString(),
+          title: result.name,
+        }))}
         value={this.state.value}
         placeholder="Search"
         title="name"

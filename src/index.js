@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './styles/index.css';
 import {
   Route, BrowserRouter as Router, Redirect, Switch,
 } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import './styles/font.css';
-import './styles/index.css';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import 'semantic-ui-css/semantic.min.css';
 import App from './views/App';
 import Contact from './components/Contact';
@@ -26,7 +26,7 @@ import ProfilePage from './containers/ProfilePage';
 import ProductListContainer from './containers/ProductListContainer';
 import RegisterPage from './containers/RegisterPage';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 const hasToken = getUserToken();
 if (hasToken) {
   store.dispatch({ type: LOGIN_CONFIRM });

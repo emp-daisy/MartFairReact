@@ -1,5 +1,6 @@
 import {
   GET_PRODUCT_PENDING, GET_PRODUCT_PASS, GET_PRODUCT_FAIL,
+  GET_RELATED_PRODUCT_PENDING, GET_RELATED_PRODUCT_PASS, GET_RELATED_PRODUCT_FAIL,
   GET_PRODUCT_DETAILS_PENDING, GET_PRODUCT_DETAILS_PASS, GET_PRODUCT_DETAILS_FAIL,
   GET_PRODUCT_LOCATION_PENDING, GET_PRODUCT_LOCATION_PASS, GET_PRODUCT_LOCATION_FAIL,
   GET_PRODUCTS_PENDING, GET_PRODUCTS_PASS, GET_PRODUCTS_FAIL,
@@ -19,7 +20,9 @@ const initialState = {
   currentPage: 1,
   pageLimit: 24,
   searchLoading: false,
+  relatedLoading: false,
   searchProducts: [],
+  relatedProducts: [],
   searchProductCount: 1,
   searchCurrentPage: 1,
   searchPageLimit: 1,
@@ -180,6 +183,26 @@ export default (state = initialState, action) => {
       return {
         ...state,
         searchLoading: false,
+        error: true,
+        errorMessage: action.errorMessage,
+      };
+    case GET_RELATED_PRODUCT_PENDING:
+      return {
+        ...state,
+        relatedLoading: true,
+        error: false,
+        errorMessage: '',
+      };
+    case GET_RELATED_PRODUCT_PASS:
+      return {
+        ...state,
+        relatedLoading: false,
+        relatedProducts: action.products,
+      };
+    case GET_RELATED_PRODUCT_FAIL:
+      return {
+        ...state,
+        relatedLoading: false,
         error: true,
         errorMessage: action.errorMessage,
       };

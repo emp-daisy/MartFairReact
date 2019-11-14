@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   Button, Divider, Form,
-  Grid, Header, Segment, Message,
+  Grid, Header, Segment, Message, Image,
 } from 'semantic-ui-react';
 import { loginCustomer, loginCustomerWithFacebook } from '../actions/customer';
 
@@ -30,7 +30,7 @@ class LoginPage extends Component {
     // eslint-disable-next-line no-useless-escape
     || password.trim().length < 1 || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
     return (
-      <Grid textAlign="center" verticalAlign="middle" style={{ margin: 'auto 0' }}>
+      <Grid container textAlign="center" verticalAlign="middle" style={{ margin: 'auto 0' }}>
         <Grid.Row>
           <Grid.Column style={{ maxWidth: 450 }}>
             {error && <Message attached error>{errorMessage}</Message>}
@@ -67,18 +67,18 @@ class LoginPage extends Component {
                   loading={loading}
                   onClick={this.loginUser}
                 >
-              Sign in
+                  Sign in
                 </Button>
 
                 <Divider horizontal>Or</Divider>
-                <Button color="facebook" content="Sign in with Facebook" icon="facebook" labelPosition="left" />
+                <Button color="facebook" content="Sign up with Facebook" icon="facebook" labelPosition="left" />
 
                 <Grid columns={2} stackable inverted style={{ paddingTop: 30 }}>
                   <Grid.Row>
                     <Grid.Column width={8}>
                       <a className="yellish" href="/">Forgot password</a>
                     </Grid.Column>
-                    <Grid.Column width={8}>
+                    <Grid.Column width={8} textAlign="right">
                       <a className="yellish" href="/register">Don't have an account?</a>
                     </Grid.Column>
                   </Grid.Row>
