@@ -14,8 +14,8 @@ const Footer = () => (
     <Container textAlign="center">
       <Grid divided inverted>
         <Grid.Row>
-          <Grid.Column tablet={4} mobile={8}>
-            <Header inverted as="h4" content="Group 1" />
+          <Grid.Column mobile={8} tablet={4} computer={4} widescreen={4}>
+            <Header inverted as="h4" content="About us" />
             <List link inverted>
               <List.Item as="a">Link One</List.Item>
               <List.Item as="a">Link Two</List.Item>
@@ -23,16 +23,16 @@ const Footer = () => (
               <List.Item as="a">Link Four</List.Item>
             </List>
           </Grid.Column>
-          <Grid.Column tablet={4} mobile={8}>
+          <Grid.Column mobile={8} tablet={4} computer={4} widescreen={4}>
             <Header inverted as="h4" content="Questions?" />
             <List link inverted>
-              <List.Item as="a">Help</List.Item>
-              <List.Item as="a">Track order</List.Item>
-              <List.Item as="a">Returns</List.Item>
-              <List.Item as="a">Shipping</List.Item>
+              <List.Item as="a" href="/help">Help</List.Item>
+              <List.Item as="a" href="/tracking">Track order</List.Item>
+              <List.Item as="a" href="/returns">Returns</List.Item>
+              <List.Item as="a" href="/shipping">Shipping</List.Item>
             </List>
           </Grid.Column>
-          <Grid.Column width={8} only="tablet">
+          <Grid.Column tablet={8} only="tablet computer wide screen">
             <Header inverted as="h4" content="Footer Header" />
             <p>
                   Extra space for a call to action inside the footer that could help re-engage
@@ -41,32 +41,29 @@ const Footer = () => (
           </Grid.Column>
         </Grid.Row>
       </Grid>
+
       <Divider inverted section />
 
       <Grid stackable inverted>
         <Grid.Row>
           <Grid.Column width={10}>
             <List horizontal inverted divided link size="small">
-              <List.Item as="a" href="#">
-              Site Map
-              </List.Item>
               <List.Item as="a" href="/contact">
               Contact Us
               </List.Item>
-              <List.Item as="a" href="#">
+              <List.Item as="a" href="/terns-and-conditions">
               Terms and Conditions
               </List.Item>
-              <List.Item as="a" href="#">
+              <List.Item as="a" href="/privacy">
               Privacy Policy
               </List.Item>
             </List>
           </Grid.Column>
           <Grid.Column width={6}>
             <List horizontal inverted divided link size="small">
-              <List.Item as="a" href="#">
+              <List.Item as="a" href="https://emp-daisy.github.io/">
               &copy;
-                {' '}
-                {new Date().getFullYear()}
+                {` ${new Date().getFullYear()} The Empress`}
               </List.Item>
             </List>
           </Grid.Column>

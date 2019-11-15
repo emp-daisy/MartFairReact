@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   loading: false,
+  customerOrdersloading: false,
   customerOrders: [],
   customerOrderInfo: undefined,
   customerOrderDetail: undefined,
@@ -20,20 +21,20 @@ export default (state = initialState, action) => {
     case GET_ORDER_INCUSTOMER_PENDING:
       return {
         ...state,
-        loading: true,
+        customerOrdersloading: true,
         error: false,
         errorMessage: '',
       };
     case GET_ORDER_INCUSTOMER_PASS:
       return {
         ...state,
-        loading: false,
+        customerOrdersloading: false,
         customerOrders: action.orders,
       };
     case GET_ORDER_INCUSTOMER_FAIL:
       return {
         ...state,
-        loading: false,
+        customerOrdersloading: false,
         error: true,
         errorMessage: action.errorMessage,
       };

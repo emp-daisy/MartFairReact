@@ -25,6 +25,7 @@ import CartPage from './containers/CartPage';
 import ProfilePage from './containers/ProfilePage';
 import ProductListContainer from './containers/ProductListContainer';
 import RegisterPage from './containers/RegisterPage';
+import MiscPage from './containers/MiscPage';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 const hasToken = getUserToken();
@@ -43,12 +44,13 @@ ReactDOM.render(
               <Route path="/catalog-search" exact component={CatalogSearch} />
               <Route path="/login" exact component={LoginPage} />
               <Route path="/register" exact component={RegisterPage} />
-              <Route path="/contact-us" exact component={Contact} />
+              <Route path="/contact" exact component={Contact} />
               <Route path="/catalog/:id" exact component={ProductPage} />
               <Route path="/catalog" component={ProductListContainer} />
               <Route path="/cart" exact component={CartPage} />
               <Route path="/checkout" exact component={Checkout} />
               <Route path={['/wishlist', '/orders', '/account']} exact component={ProfilePage} />
+              <Route path={['/help', '/faq', '/tracking', '/shipping', '/returns', '/privacy', '/terns-and-conditions']} exact component={MiscPage} />
               <Redirect from="*" to="/" />
             </Switch>
           </main>
@@ -60,7 +62,4 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

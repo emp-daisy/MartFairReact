@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   Button, Divider, Form,
-  Grid, Header, Segment, Message, Image,
+  Grid, Header, Segment, Message,
 } from 'semantic-ui-react';
 import { loginCustomer, loginCustomerWithFacebook } from '../actions/customer';
 

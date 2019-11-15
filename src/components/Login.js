@@ -40,7 +40,7 @@ const LoginForm = () => (
                   <a className="yellish" href="/">Forgot password</a>
                 </Grid.Column>
                 <Grid.Column width={8}>
-                  <a className="yellish" href="/register">Don't have an account?</a>
+                  <a className="yellish" href="/register">{'Don\'t have an account?'}</a>
                 </Grid.Column>
               </Grid.Row>
             </Grid>

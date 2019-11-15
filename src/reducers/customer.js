@@ -11,6 +11,7 @@ import {
 const initialState = {
   loggedIn: false,
   loading: false,
+  customerLoading: false,
   customerInfo: [],
   error: false,
   errorMessage: '',
@@ -82,21 +83,21 @@ export default (state = initialState, action) => {
     case GET_CUSTOMER_PENDING:
       return {
         ...state,
-        loading: true,
+        customerLoading: true,
         error: false,
         errorMessage: '',
       };
     case GET_CUSTOMER_PASS:
       return {
         ...state,
-        loading: false,
+        customerLoading: false,
         customerInfo: action.customer,
         loggedIn: true,
       };
     case GET_CUSTOMER_FAIL:
       return {
         ...state,
-        loading: false,
+        customerLoading: false,
         customerInfo: undefined,
         error: true,
         errorMessage: action.errorMessage,

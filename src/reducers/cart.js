@@ -19,6 +19,7 @@ const initialState = {
   totalLoading: false,
   cartProducts: [],
   wishlistProducts: [],
+  wishlistLoading: false,
   error: false,
   errorMessage: '',
   totalAmount: 0,
@@ -181,20 +182,20 @@ export default (state = initialState, action) => {
     case GET_WISHLIST_PENDING:
       return {
         ...state,
-        loading: true,
+        wishlistLoading: true,
         error: false,
         errorMessage: '',
       };
     case GET_WISHLIST_PASS:
       return {
         ...state,
-        loading: false,
+        wishlistLoading: false,
         wishlistProducts: action.saved,
       };
     case GET_WISHLIST_FAIL:
       return {
         ...state,
-        loading: false,
+        wishlistLoading: false,
         error: true,
         errorMessage: action.errorMessage,
       };
