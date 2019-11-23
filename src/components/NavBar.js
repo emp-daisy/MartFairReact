@@ -35,12 +35,11 @@ class NavBar extends Component {
     const { onLogOut, loggedIn, pathname } = this.props;
     return (
       <Dropdown text="My account">
-        <Dropdown.Menu>
+        <Dropdown.Menu style={{ marginTop: '15px' }}>
           {!loggedIn && (
           <React.Fragment>
             {pathname !== '/login' && <Dropdown.Item as="a" href="/login" text="Login" />}
             {pathname !== '/register' && <Dropdown.Item as="a" href="/register" text="Register" />}
-            <Dropdown.Divider />
           </React.Fragment>
           )}
           {loggedIn && (

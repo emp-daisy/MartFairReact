@@ -22,8 +22,8 @@ import StripeForm from './StripeForm';
 
 const stripePublicKey = 'pk_test_9CxzXal6aacokB09B8oy8SY500viaPTfIL';
 const countries = [
-  { key: 'm', text: 'Nigeria', value: 'nigeria' },
-  { key: 'f', text: 'England', value: 'england' },
+  { key: 'n', text: 'Nigeria', value: 'nigeria' },
+  { key: 'e', text: 'England', value: 'england' },
   { key: 'o', text: 'Other', value: 'other' },
 ];
 class Checkout extends Component {

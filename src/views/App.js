@@ -7,7 +7,7 @@ import ProductListContainer from '../containers/ProductListContainer';
 function App() {
   return (
     <React.Fragment>
-      <Grid container>
+      <Grid containerr>
         <Grid.Row columns={1} centered>
           <Header
             as="h1"

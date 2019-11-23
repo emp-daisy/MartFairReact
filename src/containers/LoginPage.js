@@ -22,7 +22,8 @@ class LoginPage extends Component {
 
   render() {
     if (this.props.loggedIn) {
-      this.props.history.replace('/');
+      if (window.document.referrer) window.location.replace(window.document.referrer);
+      else this.props.history.replace('/');
     }
     const { loading, error, errorMessage } = this.props;
     const { email, password } = this.state;
@@ -79,7 +80,7 @@ class LoginPage extends Component {
                       <a className="yellish" href="/">Forgot password</a>
                     </Grid.Column>
                     <Grid.Column width={8} textAlign="right">
-                      <a className="yellish" href="/register">Don't have an account?</a>
+                      <a className="yellish" href="/register">{`Don't have an account${'?'}`}</a>
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>

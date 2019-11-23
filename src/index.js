@@ -12,7 +12,6 @@ import 'semantic-ui-css/semantic.min.css';
 import App from './views/App';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import Checkout from './components/Checkout';
 import rootReducer from './reducers';
 import * as serviceWorker from './utils/serviceWorker';
 import CatalogSearch from './containers/CatalogSearch';
@@ -26,6 +25,7 @@ import ProfilePage from './containers/ProfilePage';
 import ProductListContainer from './containers/ProductListContainer';
 import RegisterPage from './containers/RegisterPage';
 import MiscPage from './containers/MiscPage';
+import CheckoutPage from './containers/CheckoutPage';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 const hasToken = getUserToken();
@@ -48,7 +48,7 @@ ReactDOM.render(
               <Route path="/catalog/:id" exact component={ProductPage} />
               <Route path="/catalog" component={ProductListContainer} />
               <Route path="/cart" exact component={CartPage} />
-              <Route path="/checkout" exact component={Checkout} />
+              <Route path="/checkout" exact component={CheckoutPage} />
               <Route path={['/wishlist', '/orders', '/account']} exact component={ProfilePage} />
               <Route path={['/help', '/faq', '/tracking', '/shipping', '/returns', '/privacy', '/terns-and-conditions']} exact component={MiscPage} />
               <Redirect from="*" to="/" />

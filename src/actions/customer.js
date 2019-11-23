@@ -1,3 +1,4 @@
+import { toast } from 'react-semantic-toasts';
 import axios from './rest_client';
 import {
   GET_CUSTOMER_PENDING, GET_CUSTOMER_PASS, GET_CUSTOMER_FAIL,
@@ -65,18 +66,46 @@ export const loginCustomerWithFacebook = access_token => async (dispatch) => {
     dispatch({ type: LOGIN_CUSTOMER_FAIL, errorMessage: error.message });
   }
 };
+export const logOutCustomer = () => async (dispatch) => {
+  dispatch({ type: LOGOUT_CUSTOMER_PENDING });
+  removeUserToken();
+  dispatch({ type: LOGOUT_CUSTOMER_PASS });
+};
 export const updateCustomerDetails = ({
   name, email, password, day_phone, eve_phone, mob_phone,
 }) => async (dispatch) => {
   dispatch({ type: UPDATE_CUSTOMER_DETAIL_PENDING });
   try {
     const response = await axios.put('/customer', {
-      name, email, password, day_phone, eve_phone, mob_phone,
+      name,
+      email,
+      password,
+      day_phone: day_phone || undefined,
+      eve_phone: eve_phone || undefined,
+      mob_phone: mob_phone || undefined,
     });
     const customer = response.data;
     dispatch({
       type: UPDATE_CUSTOMER_DETAIL_PASS, customer,
     });
+  } catch (error) {
+    dispatch({ type: UPDATE_CUSTOMER_DETAIL_FAIL, errorMessage: error.message });
+  }
+};
+export const updateCustomerPassword = ({ old_password, new_password }) => async (dispatch) => {
+  dispatch({ type: UPDATE_CUSTOMER_DETAIL_PENDING });
+  try {
+    await axios.put('/customer/security', { old_password, new_password });
+    setTimeout(() => {
+      toast({
+        title: 'Password sucessfully changed!',
+        description: 'Please login with new password.',
+        type: 'info',
+        icon: 'lock',
+        time: 2500,
+      });
+    }, 500);
+    dispatch(logOutCustomer());
   } catch (error) {
     dispatch({ type: UPDATE_CUSTOMER_DETAIL_FAIL, errorMessage: error.message });
   }
@@ -87,7 +116,13 @@ export const updateCustomerAddress = ({
   dispatch({ type: UPDATE_CUSTOMER_ADDRESS_PENDING });
   try {
     const response = await axios.put('/customers/address/', {
-      address_1, address_2, city, region, postal_code, country, shipping_region_id,
+      address_1,
+      address_2: address_2 || undefined,
+      city,
+      region,
+      postal_code,
+      country,
+      shipping_region_id,
     });
     const customer = response.data;
     dispatch({
@@ -108,9 +143,4 @@ export const updateCustomerCard = credit_card => async (dispatch) => {
   } catch (error) {
     dispatch({ type: UPDATE_CUSTOMER_CARD_FAIL, errorMessage: error.message });
   }
-};
-export const logOutCustomer = () => async (dispatch) => {
-  dispatch({ type: LOGOUT_CUSTOMER_PENDING });
-  removeUserToken();
-  dispatch({ type: LOGOUT_CUSTOMER_PASS });
 };

@@ -26,7 +26,7 @@ class CartPage extends Component {
   }
 
   componentDidUpdate(nextProps) {
-    if (this.props.totalCost !== nextProps.totalCost) {
+    if (this.props.products !== nextProps.products) {
       this.props.totalAmount();
     }
   }
@@ -73,7 +73,7 @@ class CartPage extends Component {
                   <Header textAlign="right">Total:</Header>
                 </Table.HeaderCell>
                 <Table.HeaderCell>
-                  <Header>{`$${totalCost}`}</Header>
+                  <Header>{`$${totalCost.toFixed(2)}`}</Header>
                 </Table.HeaderCell>
               </Table.Row>
               <Table.Row>

@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  Header, Form, Icon, Modal, Button, Table,
+  Header, Form, Modal, Button, Table,
 } from 'semantic-ui-react';
 import PageLoader from './placeholders/PageLoader';
 
 const Customer = ({
-  activeModal, loading, customerInfo, creditCard, shippingRegion, customerDetails,
-  handleModalClose, saveLoading, updateCustomerCard, updateCustomerAddress,
-  customerAddress, updateCustomerDetails, handleModalOpen, handleChange,
+  activeModal, loading, customerInfo, creditCard, shippingRegion, customerData,
+  handleModalClose, saveLoading, updateCustomerCard, updateCustomerAddress, updateCustomerPassword,
+  updateCustomerDetails, handleModalOpen, handleChange,
 }) => (
   <React.Fragment>
     {
@@ -29,7 +29,13 @@ const Customer = ({
                       <Table.Row><Table.Cell>Contact</Table.Cell></Table.Row>
                       <Table.Row>
                         <Table.Cell>
-                          <Icon name="edit" onClick={() => handleModalOpen('customer_details')} />
+                          <a
+                            className="yellish"
+                            href="/"
+                            onClick={handleModalOpen('customer_details')}
+                          >
+                            Edit
+                          </a>
                         </Table.Cell>
                       </Table.Row>
                     </Table.Body>
@@ -56,12 +62,17 @@ const Customer = ({
               <Table.Row>
                 <Table.Cell>
                   Address
-                  <Icon name="edit" onClick={() => handleModalOpen('customer_address')} style={{ paddingLeft: '5px' }} />
+                  <br />
+                  <a
+                    className="yellish"
+                    href="/"
+                    onClick={handleModalOpen('customer_address')}
+                  >
+                    Edit
+                  </a>
                 </Table.Cell>
                 <Table.Cell>
-                  {customerInfo.address_1}
-                  <br />
-                  {customerInfo.address_2}
+                  {`${customerInfo.address_1}${customerInfo.address_2 ? ', ' : ''} ${customerInfo.address_2 || ''}`}
                   <br />
                   {customerInfo.city}
                   <br />
@@ -73,9 +84,28 @@ const Customer = ({
               <Table.Row>
                 <Table.Cell>
                   Billing
-                  <Icon name="edit" onClick={() => handleModalOpen('customer_card')} style={{ paddingLeft: '5px' }} />
+                  <br />
+                  <a
+                    className="yellish"
+                    href="/"
+                    onClick={handleModalOpen('customer_card')}
+                  >
+                    Edit
+                  </a>
                 </Table.Cell>
                 <Table.Cell>{customerInfo.credit_card}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell colSpan={2} textAlign="right">
+                  <Button
+                    onClick={handleModalOpen('customer_password')}
+                    className="yellish roundish"
+                    size="small"
+                    compact
+                  >
+                      Change Password
+                  </Button>
+                </Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
@@ -88,9 +118,10 @@ const Customer = ({
             closeOnDimmerClick={false}
           >
             <Modal.Content>
+              { activeModal === 'customer_password' && <EditCustomerPassword customerData={customerData} loading={saveLoading} updateCustomerPassword={updateCustomerPassword} handleChange={handleChange} />}
               { activeModal === 'customer_card' && <EditCustomerCard creditCard={creditCard} loading={saveLoading} updateCustomerCard={updateCustomerCard} handleChange={handleChange} />}
-              { activeModal === 'customer_details' && <EditCustomerDetails loading={saveLoading} updateCustomerDetails={updateCustomerDetails} customerDetails={customerDetails} />}
-              { activeModal === 'customer_address' && <EditCustomerAddress shippingRegion={shippingRegion} loading={saveLoading} updateCustomerAddress={updateCustomerAddress} customerAddress={customerAddress} />}
+              { activeModal === 'customer_details' && <EditCustomerDetails loading={saveLoading} updateCustomerDetails={updateCustomerDetails} customerDetails={customerData} handleChange={handleChange} />}
+              { activeModal === 'customer_address' && <EditCustomerAddress shippingRegion={shippingRegion} loading={saveLoading} updateCustomerAddress={updateCustomerAddress} customerAddress={customerData} handleChange={handleChange} />}
             </Modal.Content>
           </Modal>
         </React.Fragment>
@@ -99,39 +130,41 @@ const Customer = ({
   </React.Fragment>
 );
 
-const EditCustomerDetails = ({ updateCustomerDetails, customerDetails }) => (
-  <Form size="small">
+const EditCustomerDetails = ({ updateCustomerDetails, customerDetails, handleChange }) => (
+  <Form size="small" autoComplete="off">
     <Header icon="user" content="Edit details" />
     <Form.Input
       fluid
       placeholder="Name"
+      value={customerDetails.name}
+      onChange={(_e, { value }) => handleChange('name', value)}
     />
     <Form.Input
       fluid
       placeholder="Email"
+      value={customerDetails.email}
+      onChange={(_e, { value }) => handleChange('email', value)}
     />
 
     <Form.Group widths={2}>
       <Form.Input
         placeholder="Day Phone Number"
+        value={customerDetails.day_phone}
+        onChange={(_e, { value }) => handleChange('day_phone', value)}
       />
       <Form.Input
         placeholder="Night Phone Number"
+        value={customerDetails.eve_phone}
+        onChange={(_e, { value }) => handleChange('eve_phone', value)}
       />
     </Form.Group>
 
     <Form.Group widths={2}>
       <Form.Input
+        type="text"
         placeholder="Mobile Phone Number"
-        name="mob_phone"
-      />
-      <Form.Input
-        fluid
-        placeholder="Password"
-        type="password"
-        name="password"
-        // value={password}
-        // onChange={this.handleChange}
+        value={customerDetails.mob_phone}
+        onChange={(_e, { value }) => handleChange('mob_phone', value)}
       />
     </Form.Group>
     <Button
@@ -144,35 +177,52 @@ const EditCustomerDetails = ({ updateCustomerDetails, customerDetails }) => (
   </Form>
 );
 
-const EditCustomerAddress = ({ shippingRegion, customerAddress, updateCustomerAddress }) => (
-  <Form size="small">
+const EditCustomerAddress = ({
+  shippingRegion, customerAddress, updateCustomerAddress, handleChange,
+}) => (
+  <Form size="small" autoComplete="off">
     <Header icon="user" content="Edit address" />
     <Form.Input
       fluid
-      placeholder="Address"
+      placeholder="Address 1"
+      value={customerAddress.address_1}
+      onChange={(_e, { value }) => handleChange('address_1', value)}
     />
     <Form.Input
       fluid
-      placeholder="Address"
+      placeholder="Address 2"
+      value={customerAddress.address_2}
+      onChange={(_e, { value }) => handleChange('address_2', value)}
     />
-
     <Form.Group widths={2}>
       <Form.Input
         placeholder="City"
+        value={customerAddress.city}
+        onChange={(_e, { value }) => handleChange('city', value)}
       />
       <Form.Input
         placeholder="Region"
+        value={customerAddress.region}
+        onChange={(_e, { value }) => handleChange('region', value)}
       />
-      <Form.Select options={shippingRegion || []} placeholder="Region" />
+      <Form.Select
+        options={shippingRegion || []}
+        placeholder="Shipping Region"
+        value={customerAddress.shipping_region_id}
+        onChange={(_e, { value }) => handleChange('shipping_region_id', value)}
+      />
     </Form.Group>
-
     <Form.Group widths={2}>
       <Form.Input
         placeholder="Postcode"
+        value={customerAddress.postal_code}
+        onChange={(_e, { value }) => handleChange('postal_code', value)}
       />
       <Form.Input
         fluid
         placeholder="Country"
+        value={customerAddress.country}
+        onChange={(_e, { value }) => handleChange('country', value)}
       />
     </Form.Group>
     <Button
@@ -188,7 +238,7 @@ const EditCustomerAddress = ({ shippingRegion, customerAddress, updateCustomerAd
 const EditCustomerCard = ({
   loading, creditCard, updateCustomerCard, handleChange,
 }) => (
-  <Form size="small">
+  <Form size="small" autoComplete="off">
     <Header icon="credit card" content="Edit saved card" />
     <Form.Input
       fluid
@@ -202,11 +252,56 @@ const EditCustomerCard = ({
       size="large"
       loading={loading}
       disabled={
-        !creditCard || creditCard - Math.floor(creditCard) !== 0 || creditCard.length < 10
+        !creditCard || creditCard - Math.floor(creditCard) !== 0 || creditCard.length < 13
       }
       onClick={() => updateCustomerCard(creditCard)}
     >
       Save card
+    </Button>
+  </Form>
+);
+
+const EditCustomerPassword = ({
+  loading, customerData: { old_password, new_password, confirm_password },
+  updateCustomerPassword, handleChange,
+}) => (
+  <Form size="small" autoComplete="off">
+    <Header icon="lock" content="Edit password" />
+    <Form.Input
+      fluid
+      icon="lock"
+      iconPosition="left"
+      placeholder="Old password"
+      type="password"
+      onChange={(_e, { value }) => handleChange('old_password', value)}
+    />
+    <Form.Input
+      fluid
+      icon="lock"
+      iconPosition="left"
+      placeholder="New password"
+      type="password"
+      onChange={(_e, { value }) => handleChange('new_password', value)}
+    />
+    <Form.Input
+      fluid
+      icon="lock"
+      iconPosition="left"
+      placeholder="Confirm New password"
+      type="password"
+      onChange={(_e, { value }) => handleChange('confirm_password', value)}
+    />
+    <Button
+      className="yellish roundish"
+      size="large"
+      loading={loading}
+      disabled={
+        !old_password || !new_password || new_password.length < 6
+        || new_password !== confirm_password
+      }
+      onClick={() => updateCustomerPassword({ old_password, new_password, confirm_password })}
+    >
+      Save Password
     </Button>
   </Form>
 );

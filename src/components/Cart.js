@@ -64,10 +64,10 @@ const CartRow = ({
         <LikeButton onChange={() => addToWishlist(item_id)} />
       </Table.Cell>
       <Table.Cell>
-        <Header as="h4">{price}</Header>
+        <Header as="h4">{price.toFixed(2)}</Header>
       </Table.Cell>
       <Table.Cell>
-        <Header as="h3">{subtotal}</Header>
+        <Header as="h3">{subtotal.toFixed(2)}</Header>
         <a
           className="yellish"
           href="/"
@@ -94,10 +94,10 @@ const CartRow = ({
       <Table.Cell singleLine textAlign="center">
         <NumberInput defaultValue={quantity} onChange={updateProductQuantity} />
         <LikeButton onChange={() => addToWishlist(item_id)} />
-        <Header as="h4">{price}</Header>
+        <Header as="h4">{price.toFixed(2)}</Header>
       </Table.Cell>
       <Table.Cell textAlign="center">
-        <Header as="h3">{subtotal}</Header>
+        <Header as="h3">{subtotal.toFixed(2)}</Header>
         <a
           className="yellish"
           href="/"

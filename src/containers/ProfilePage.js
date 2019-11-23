@@ -7,6 +7,7 @@ import {
 import { getWishlist, moveToCart } from '../actions/cart';
 import {
   getCustomer, updateCustomerCard, updateCustomerDetails, updateCustomerAddress,
+  updateCustomerPassword,
 } from '../actions/customer';
 import { getShippings } from '../actions/shipping';
 import { getCustomerOrders, getOrder } from '../actions/order';
@@ -18,8 +19,8 @@ import Customer from '../components/Customer';
 class ProfilePage extends Component {
   state = {
     activeOrderId: -1,
-    creditCard: '',
     activeModal: null,
+    customerData: {},
   };
 
   componentDidMount=() => {
@@ -32,6 +33,7 @@ class ProfilePage extends Component {
     const { pathname: prevPathname } = prevProps.location;
 
     if (customerInfo !== prevProps.customerInfo) {
+      this.syncCustomer();
       this.handleModalClose();
     }
     if (pathname !== prevPathname) {
@@ -52,7 +54,12 @@ class ProfilePage extends Component {
     }
   }
 
-  handleModalOpen = activeModal => this.setState({ activeModal })
+  syncCustomer = () => this.setState({ customerData: this.props.customerInfo || {} })
+
+  handleModalOpen = activeModal => (e) => {
+    e.preventDefault();
+    this.setState({ activeModal });
+  }
 
   handleModalClose = () => this.setState({ activeModal: null })
 
@@ -64,14 +71,18 @@ class ProfilePage extends Component {
     this.setState({ activeOrderId: activeOrder === order_id ? -1 : order_id });
   }
 
+  handleChange = (name, value) => {
+    this.setState(state => ({ customerData: { ...state.customerData, [name]: value } }));
+  }
+
   getMenuView = () => {
     const { pathname } = this.props.history.location;
     const {
-      wishlistProducts, wishlistLoading, customerOrders, customerOrderInfo,
+      wishlistProducts, wishlistLoading, customerOrders, customerOrderInfo, shippingRegions,
       customerInfo = {}, customerLoading, customerOrdersloading, customerSaveLoading,
     } = this.props;
     const {
-      activeOrderId, activeModal, creditCard, shippingRegion, customerAddress, customerDetails,
+      activeOrderId, activeModal, customerData = {},
     } = this.state;
     switch (pathname) {
       case '/account':
@@ -79,17 +90,19 @@ class ProfilePage extends Component {
           <Customer
             activeModal={activeModal}
             customerInfo={customerInfo}
-            customerAddress={customerAddress}
-            customerDetails={customerDetails}
+            customerData={customerData}
+            creditCard={customerData.creditCard}
             loading={customerLoading}
-            creditCard={creditCard}
-            shippingRegion={shippingRegion}
+            shippingRegion={shippingRegions.map(({ shipping_region_id, shipping_region }) => ({
+              key: shipping_region_id, text: shipping_region, value: shipping_region_id,
+            }))}
             saveLoading={customerSaveLoading}
-            handleChange={(name, value) => this.setState({ [name]: value })}
+            handleChange={this.handleChange}
             handleModalClose={this.handleModalClose}
             handleModalOpen={this.handleModalOpen}
             updateCustomerDetails={this.props.updateCustomerDetails}
             updateCustomerCard={this.props.updateCustomerCard}
+            updateCustomerPassword={this.props.updateCustomerPassword}
             updateCustomerAddress={this.props.updateCustomerAddress}
           />
         );
@@ -180,6 +193,7 @@ const mapStateToProps = state => ({
   loading: state.customer.loading,
   customerLoading: state.customer.customerLoading,
   customerSaveLoading: state.customer.customerSaveLoading,
+  shippingRegions: state.shipping.allShipping,
   loggedIn: state.customer.loggedIn,
 });
 
@@ -193,6 +207,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   updateCustomerCard,
   updateCustomerDetails,
   updateCustomerAddress,
+  updateCustomerPassword,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
