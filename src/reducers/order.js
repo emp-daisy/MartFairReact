@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   loading: false,
+  createLoading: false,
   customerOrdersloading: false,
   customerOrders: [],
   customerOrderInfo: undefined,
@@ -81,20 +82,20 @@ export default (state = initialState, action) => {
     case CREATE_ORDER_PENDING:
       return {
         ...state,
-        loading: true,
+        createLoading: true,
         error: false,
         errorMessage: '',
       };
     case CREATE_ORDER_PASS:
       return {
         ...state,
-        loading: false,
+        createLoading: false,
         customerOrders: action.order,
       };
     case CREATE_ORDER_FAIL:
       return {
         ...state,
-        loading: false,
+        createLoading: false,
         error: true,
         errorMessage: action.errorMessage,
       };

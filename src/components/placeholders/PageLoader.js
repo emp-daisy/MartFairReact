@@ -1,10 +1,10 @@
 import React from 'react';
 import { Placeholder, Dimmer, Loader } from 'semantic-ui-react';
 
-const PageLoader = () => (
+const PageLoader = ({ message = 'Loading...'}) => (
   <React.Fragment>
     <Dimmer active inverted>
-      <Loader indeterminate>Loading...</Loader>
+      <Loader indeterminate>{ message }</Loader>
     </Dimmer>
     <Placeholder>
       <Placeholder.Paragraph>

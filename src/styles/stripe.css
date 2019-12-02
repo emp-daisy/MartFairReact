@@ -41,4 +41,5 @@
 .ui.form.stripe-payment .field > label {
   font-size: 16px;
   color: #6c6c6c;
+  text-align: left;
 }

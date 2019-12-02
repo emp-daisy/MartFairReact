@@ -9,7 +9,7 @@ import {
   getCustomer, updateCustomerCard, updateCustomerDetails, updateCustomerAddress,
   updateCustomerPassword,
 } from '../actions/customer';
-import { getShippings } from '../actions/shipping';
+import { getShippingRegions } from '../actions/shipping';
 import { getCustomerOrders, getOrder } from '../actions/order';
 import Erroring from '../components/Erroring';
 import WishList from '../components/Wishlist';
@@ -25,7 +25,7 @@ class ProfilePage extends Component {
 
   componentDidMount=() => {
     this.getMenuItems();
-    this.props.getShippings();
+    this.props.getShippingRegions();
   }
 
   componentDidUpdate = (prevProps) => {
@@ -193,7 +193,7 @@ const mapStateToProps = state => ({
   loading: state.customer.loading,
   customerLoading: state.customer.customerLoading,
   customerSaveLoading: state.customer.customerSaveLoading,
-  shippingRegions: state.shipping.allShipping,
+  shippingRegions: state.shipping.allShippingRegions,
   loggedIn: state.customer.loggedIn,
 });
 
@@ -203,7 +203,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getCustomerOrders,
   moveToCart,
   getOrder,
-  getShippings,
+  getShippingRegions,
   updateCustomerCard,
   updateCustomerDetails,
   updateCustomerAddress,

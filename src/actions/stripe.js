@@ -9,7 +9,7 @@ export const createCharge = ({
 }) => async (dispatch) => {
   dispatch({ type: GET_CHARGE_PENDING });
   try {
-    const response = await axios.post('/shipping/regions', {
+    const response = await axios.post('/stripe/charge', {
       stripeToken, order_id, description, amount, currency,
     });
     const stripe = response.data;

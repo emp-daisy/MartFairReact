@@ -5,6 +5,7 @@ import department from './department';
 import customer from './customer';
 import cart from './cart';
 import order from './order';
+import payment from './stripe';
 import shipping from './shipping';
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   customer,
   cart,
   order,
+  payment,
   shipping,
 });
 

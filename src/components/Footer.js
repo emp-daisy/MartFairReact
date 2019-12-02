@@ -12,7 +12,7 @@ import {
 const Footer = () => (
   <Segment inverted style={{ padding: '2em 0em' }} vertical>
     <Container textAlign="center">
-      <Grid divided inverted>
+      <Grid divided inverted stackable>
         <Grid.Row>
           <Grid.Column mobile={8} tablet={4} computer={4} widescreen={4}>
             <Header inverted as="h4" content="About us" />
@@ -32,7 +32,7 @@ const Footer = () => (
               <List.Item as="a" href="/shipping">Shipping</List.Item>
             </List>
           </Grid.Column>
-          <Grid.Column tablet={8} only="tablet computer wide screen">
+          <Grid.Column tablet={8} only="tablet computer">
             <Header inverted as="h4" content="Footer Header" />
             <p>
                   Extra space for a call to action inside the footer that could help re-engage

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Header, List, Icon, Accordion,
+  Header, List, Icon, Accordion, Image,
 } from 'semantic-ui-react';
 import PageLoader from './placeholders/PageLoader';
 
@@ -22,21 +22,24 @@ const Orders = ({
           <Accordion.Content active={activeOrderId === order_id}>
             <List divided verticalAlign="middle">
               {(customerOrderInfo && customerOrderInfo.length > 0) ? customerOrderInfo.map(({
-                order_id: id, attributes, product_name, quantity, unit_cost,
+                order_id: id, attributes, product_name, quantity, unit_cost, thumbnail,
               }) => (
                 <List.Item key={id}>
                   <List.Content floated="right">
                     <List.Description>{`${quantity} X $ ${unit_cost}`}</List.Description>
                   </List.Content>
+                  <Image src={`${process.env.PUBLIC_URL}/product_images/${thumbnail}`} size="mini" />
                   <List.Content>
-                    <List.Header>{product_name}</List.Header>
+                    <List.Header>
+                      {product_name}
+                    </List.Header>
                     <List.Description>{attributes}</List.Description>
                   </List.Content>
                 </List.Item>
               ))
                 : (
                   <List.Item>
-                    Loading details
+                    Loading details...
                   </List.Item>
                 )
             }

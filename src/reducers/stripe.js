@@ -6,7 +6,7 @@ const initialState = {
   loading: false,
   error: false,
   errorMessage: '',
-  stripeInfo: undefined,
+  success: false,
 };
 
 export default (state = initialState, action) => {
@@ -15,6 +15,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        success: false,
         error: false,
         errorMessage: '',
       };
@@ -22,13 +23,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        stripeInfo: action.stripe,
+        success: true,
       };
     case GET_CHARGE_FAIL:
       return {
         ...state,
         loading: false,
-        productInfo: undefined,
         error: true,
         errorMessage: action.errorMessage,
       };
